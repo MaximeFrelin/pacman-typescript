@@ -1,34 +1,33 @@
 import "phaser";
+import Game from "./scenes/Game"
+import { Scene } from "phaser";
 
-function preload() {
-    this.load.image('pac-man', 'assets/pacman/pac-man-normal.png');
+//TODO A exporter : MFN
+export declare type GameConfig = {
+    title: string;
+    width: number,
+    height: number;
+    parent: string;
+    backgroundColor: string;
+    scene: any[];
 }
 
-function create() {
-    console.log("je me créer");
-    this.add.image(400, 300, 'pac-man');
-    this.add.image(400, 400, 'pac-man');
-}
-
-function update() {
-    console.log("j'update");
-}
+export var game;
 
 
-var config = {
-    type: Phaser.AUTO,
+const config: GameConfig = {
+    title: "Starfall",
     width: 800,
     height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 200 }
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
+    parent: "game",
+    backgroundColor: "#000000",
+    scene: [Game]
+};
+export class StarfallGame extends Phaser.Game {
+    constructor(config: GameConfig) {
+        super(config);
     }
 }
-let game = new Phaser.Game(config);
+window.onload = () => {
+    game = new StarfallGame(config);
+};
