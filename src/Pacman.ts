@@ -1,43 +1,53 @@
-export default class Pacman {
-  rightSprite;
+import { keyLeft, keyUp, keyRight, keyDown } from "./Config/KeyboardSettings"
+import Configuration from "./Config/Configuration";
 
-  preload() {
-    game.load.atlasJSONHash('bot', 'assets/sprites/running_bot.png', 'assets/sprites/running_bot.json');
+/**
+ * Cette classe remplacera le code présent dans Game.ts
+ */
+export default class Pacman extends Phaser.GameObjects.Sprite {
+  rightSprite: Phaser.GameObjects.Sprite;
+  topSprite: Phaser.GameObjects.Sprite;;
+  leftSprite: Phaser.GameObjects.Sprite;;
+  bottomSprite: Phaser.GameObjects.Sprite;;
+
+  currentScene: Phaser.Scene;
+
+  constructor(currentScene: Phaser.Scene) {
+    super(currentScene, 0, 0, "./assets/pacman/pac-man-right-idle.png");
+  }
+
+  private move(): void {
+    if (keyLeft.isDown) {
+      this.x -= Configuration.PlayerSpeed;
+    }
+    else if (keyUp.isDown) {
+      this.y -= Configuration.PlayerSpeed;
+    }
+    else if (keyRight.isDown) {
+      this.x += Configuration.PlayerSpeed;
+    }
+    else if (keyDown.isDown) {
+      this.y += Configuration.PlayerSpeed;
+    }
+  }
+
+  private createAnimation(): void {
+    this.currentScene.anims.create({
+      key: 'walk-right',
+      frames: [
+        { key: 'pac-man-right-1', frame: "" },
+        { key: 'pac-man-right-2', frame: "" },
+      ],
+      frameRate: 10,
+      repeat: -1
+    });
+  }
+
+  private loadSprite(): void {
+    this.currentScene.load.image('pac-man-right-1', './assets/pacman/pac-man-right-idle.png');
+    this.currentScene.load.image('pac-man-right-2', './assets/pacman/pac-man-right-anim.png');
   }
 
 
-  create() {
-
-    s = game.add.sprite(game.world.centerX, game.world.centerY, 'bot');
-    s.anchor.setTo(0.5, 0.5);
-    s.scale.setTo(2, 2);
-
-    s.animations.add('run');
-    s.animations.play('run', 10, true);
-
-  }
-
-  update() {
-
-    if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-      s.x -= 4;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-      s.x += 4;
-    }
-
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-      s.y -= 4;
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN)) {
-      s.y += 4;
-    }
-
-  }
-
-  render() {
-    game.debug.spriteInfo(s, 20, 32);
-
-  }
 
 }

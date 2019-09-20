@@ -12,7 +12,7 @@ export declare type GameConfig = {
     scene: any[];
 }
 
-export var game;
+export var game: Phaser.Game;
 
 
 const config: GameConfig = {

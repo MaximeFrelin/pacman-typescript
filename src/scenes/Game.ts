@@ -1,37 +1,32 @@
 import Configuration from "../Config/Configuration";
+import { keyLeft, keyUp, keyRight, keyDown } from "../Config/KeyboardSettings"
+import { configureKeyboardForScene } from "../Config/KeyboardSettings"
 
 export default class Game extends Phaser.Scene {
   animation;
   sprite: Phaser.GameObjects.Sprite;
 
-  //Entré clavier
-  keyLeft: Phaser.Input.Keyboard.Key = undefined;
-  keyUp: Phaser.Input.Keyboard.Key = undefined;
-  keyRight: Phaser.Input.Keyboard.Key = undefined;
-  keyDown: Phaser.Input.Keyboard.Key = undefined;
-
   protected preload() {
-    this.load.image('pac-man-right', '../assets/pacman/pac-man-normal.png');
-    // this.load.spritesheet('pac-man-right', '../assets/pac-man-assets-all.png', { frameWidth: 32, frameHeight: 48 })
+    this.load.image('pac-man-right-1', '../assets/pacman/pac-man-right-idle.png');
+    this.load.image('pac-man-right-2', '../assets/pacman/pac-man-right-anim.png');
   }
 
   public create() {
-    this.sprite = this.add.sprite(200, 200, 'pac-man-right');
-    this.sprite.scale = 2;
-
-    this.keyLeft = this.input.keyboard.addKey("Q");
-    this.keyUp = this.input.keyboard.addKey("Z");
-    this.keyRight = this.input.keyboard.addKey("D");
-    this.keyDown = this.input.keyboard.addKey("S");
+    //Configuration des inputs de la scene
+    configureKeyboardForScene(this);
 
     this.anims.create({
-      key: 'left',
-      frames: this.anims.generateFrameNumbers('pac-man-right', { start: 0, end: 3 }),
+      key: 'walk-right',
+      frames: [
+        { key: 'pac-man-right-1', frame: "" },
+        { key: 'pac-man-right-2', frame: "" },
+      ],
       frameRate: 10,
       repeat: -1
     });
 
 
+    this.sprite = this.add.sprite(200, 200, 'pac-man-right').play("walk-right");
   }
 
   //Appelé à chaque frame disponible
@@ -40,16 +35,16 @@ export default class Game extends Phaser.Scene {
   }
 
   private move() {
-    if (this.keyLeft.isDown) {
+    if (keyLeft.isDown) {
       this.sprite.x -= Configuration.PlayerSpeed;
     }
-    else if (this.keyUp.isDown) {
+    else if (keyUp.isDown) {
       this.sprite.y -= Configuration.PlayerSpeed;
     }
-    else if (this.keyRight.isDown) {
+    else if (keyRight.isDown) {
       this.sprite.x += Configuration.PlayerSpeed;
     }
-    else if (this.keyDown.isDown) {
+    else if (keyDown.isDown) {
       this.sprite.y += Configuration.PlayerSpeed;
     }
   }
