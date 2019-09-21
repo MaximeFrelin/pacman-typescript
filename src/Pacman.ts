@@ -5,18 +5,16 @@ import Configuration from "./Config/Configuration";
  * Cette classe remplacera le code présent dans Game.ts
  */
 export default class Pacman extends Phaser.GameObjects.Sprite {
-  rightSprite: Phaser.GameObjects.Sprite;
-  topSprite: Phaser.GameObjects.Sprite;;
-  leftSprite: Phaser.GameObjects.Sprite;;
-  bottomSprite: Phaser.GameObjects.Sprite;;
-
   currentScene: Phaser.Scene;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 0, 0, "./assets/pacman/pac-man-right-idle.png");
+    super(currentScene, 200, 200, "pac-man-right-1");
+    this.currentScene = currentScene;
+    this.currentScene.add.existing(this);
+    this.createAnimation();
   }
 
-  private move(): void {
+  public move(): void {
     if (keyLeft.isDown) {
       this.x -= Configuration.PlayerSpeed;
     }
@@ -31,7 +29,23 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
     }
   }
 
-  private createAnimation(): void {
+  /**
+   * Lance l'état de base de pacman
+   */
+  public start(): void {
+  }
+
+  public update() {
+    console.log("J'UPDATE");
+  }
+
+  //Appelé à chaque frame disponible
+  preUpdate() {
+    // console.log("je pré update");
+    this.move();
+  }
+
+  public createAnimation(): void {
     this.currentScene.anims.create({
       key: 'walk-right',
       frames: [
@@ -41,11 +55,6 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
       frameRate: 10,
       repeat: -1
     });
-  }
-
-  private loadSprite(): void {
-    this.currentScene.load.image('pac-man-right-1', './assets/pacman/pac-man-right-idle.png');
-    this.currentScene.load.image('pac-man-right-2', './assets/pacman/pac-man-right-anim.png');
   }
 
 

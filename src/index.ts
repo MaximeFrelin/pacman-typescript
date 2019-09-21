@@ -23,11 +23,11 @@ const config: GameConfig = {
     backgroundColor: "#000000",
     scene: [Game]
 };
-export class StarfallGame extends Phaser.Game {
+export class PacMan extends Phaser.Game {
     constructor(config: GameConfig) {
         super(config);
     }
 }
 window.onload = () => {
-    game = new StarfallGame(config);
+    game = new PacMan(config);
 };
