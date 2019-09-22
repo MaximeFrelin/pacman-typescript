@@ -11,7 +11,7 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
     super(currentScene, 200, 200, "pac-man-right-1");
     this.currentScene = currentScene;
     this.currentScene.add.existing(this);
-    this.createAnimation();
+    this.play("walk-right");
   }
 
   public move(): void {
@@ -33,6 +33,7 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
    * Lance l'état de base de pacman
    */
   public start(): void {
+    // this.play("walk-right");
   }
 
   public update() {
@@ -42,21 +43,7 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
   //Appelé à chaque frame disponible
   preUpdate() {
     // console.log("je pré update");
+    this.anims.update(10, 10);
     this.move();
   }
-
-  public createAnimation(): void {
-    this.currentScene.anims.create({
-      key: 'walk-right',
-      frames: [
-        { key: 'pac-man-right-1', frame: "" },
-        { key: 'pac-man-right-2', frame: "" },
-      ],
-      frameRate: 10,
-      repeat: -1
-    });
-  }
-
-
-
 }

@@ -14,6 +14,16 @@ export default class Game extends Phaser.Scene {
 
   public create() {
     configureKeyboardForScene(this);
+    this.anims.create({
+      key: 'walk-right',
+      frames: [
+        { key: 'pac-man-right-1', frame: "" },
+        { key: 'pac-man-right-2', frame: "" },
+      ],
+      frameRate: 10,
+      repeat: -1
+    });
+
     this.pacman = new Pacman(this);
     this.pacman.start();
     //Configuration des inputs de la scene
