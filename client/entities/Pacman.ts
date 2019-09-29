@@ -1,5 +1,11 @@
-import { keyLeft, keyUp, keyRight, keyDown } from "./Config/KeyboardSettings"
-import Configuration from "./Config/Configuration";
+import {
+  keyLeft,
+  keyUp,
+  keyRight,
+  keyDown,
+  escape
+} from "../config/KeyboardSettings";
+import Configuration from "../config/Configuration";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
@@ -47,25 +53,26 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
 
   //Initialise les events des boutons
   private initEvent(): void {
-    keyLeft.on("down", (evt) => {
+    keyLeft.on("down", evt => {
       this.changeDirection(KeyCode.LEFT);
       this.play("walk-left");
-    })
-    keyRight.on("down", (evt) => {
+    });
+    keyRight.on("down", evt => {
       this.changeDirection(KeyCode.RIGHT);
       this.play("walk-right");
-    })
-    keyUp.on("down", (evt) => {
+    });
+    keyUp.on("down", evt => {
       this.changeDirection(KeyCode.UP);
       this.play("walk-top");
-    })
-    keyDown.on("down", (evt) => {
+    });
+    keyDown.on("down", evt => {
       this.changeDirection(KeyCode.DOWN);
       this.play("walk-bottom");
-    })
+    });
+    escape.on("down", evt => {
+      console.log("ESCAPE");
+    });
   }
-
-
 }
 
 enum KeyCode {

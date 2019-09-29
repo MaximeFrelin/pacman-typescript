@@ -1,25 +1,17 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "sourceMap": false,
-        "allowJs": true,
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "noImplicitThis": false,
-        "removeComments": false,
-        "preserveConstEnums": false,
-        "strict": false,
-        "lib": [
-            "es5",
-            "dom",
-            "scripthost"
-        ]
-    },
-    "include": [
-        "src/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": false,
+    "allowJs": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "removeComments": false,
+    "preserveConstEnums": false,
+    "strict": false,
+    "lib": ["es5", "dom", "scripthost"]
+  },
+  "include": ["client/*"],
+  "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
-import Configuration from "../Config/Configuration";
-import { keyLeft, keyUp, keyRight, keyDown } from "../Config/KeyboardSettings"
-import { configureKeyboardForScene } from "../Config/KeyboardSettings"
-import Pacman from "../Pacman";
+import Configuration from "../config/Configuration";
+import { keyLeft, keyUp, keyRight, keyDown } from "../config/KeyboardSettings";
+import { configureKeyboardForScene } from "../config/KeyboardSettings";
+import Pacman from "../entities/Pacman";
 import AnimationManager from "../AnimationManager";
 
 export default class Game extends Phaser.Scene {
@@ -21,7 +21,5 @@ export default class Game extends Phaser.Scene {
   }
 
   //Appelé à chaque frame disponible
-  public update() {
-
-  }
+  public update() {}
 }
