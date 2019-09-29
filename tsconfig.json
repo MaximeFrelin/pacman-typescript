@@ -1,17 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    // Target latest version of ECMAScript.
     "module": "commonjs",
-    "sourceMap": false,
+    "target": "es2017",
+    // Search under node_modules for non-relative imports.
+    // Process & infer types from .js files.
     "allowJs": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "removeComments": false,
-    "preserveConstEnums": false,
+    "types": ["node"],
+    // Don't emit; allow Babel to transform files.
+    "noEmit": false,
+    // Enable strictest settings like strictNullChecks & noImplicitAny.
     "strict": false,
-    "lib": ["es5", "dom", "scripthost"]
+    // Import non-ES modules as default imports.
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true
   },
-  "include": ["client/*"],
-  "exclude": ["node_modules"]
+  "include": ["./client/*", "./serveur/*"],
+  "exclude": ["./node_modules"]
 }

@@ -1,3 +1,4 @@
+// import connection from "./bdd/MySqlConnect";
 const express = require("express");
 const multer = require("multer");
 const multipart = multer();
@@ -8,20 +9,11 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("../webpack.config.js");
 
 const app = express();
-const port = 8080;
+const port = 9000;
 
 const devServerEnabled = true;
 
 if (devServerEnabled) {
-  //reload=true:Enable auto reloading when changing JS files or content
-  //timeout=1000:Time from disconnecting from server to reconnecting
-  //   config.entry.app.unshift(
-  //     "webpack-hot-middleware/client?reload=true&timeout=1000"
-  //   );
-
-  //   //Add HMR plugin
-  //   config.plugins.push(new webpack.HotModuleReplacementPlugin());
-
   const compiler = webpack(config);
 
   //Enable "webpack-dev-middleware"
@@ -38,7 +30,9 @@ if (devServerEnabled) {
 app.use(express.static("./public"));
 
 //API
-app.post("/api/add", multipart.any(), function(req, res) {});
+app.get("/api/score", multipart.any(), function(req, res) {
+  res.json("{'coucou': 'coucou'}");
+});
 
 app.listen(port, () => {
   console.log("Server started on port:" + port);
