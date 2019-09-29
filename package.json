@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start:client": "webpack-dev-server --config webpack.config.js",
-    "start": "babel-watch --presets @babel/preset-typescript ./serveur/index.ts",
-    "ts": "ts-node -O {\"module\": \"commonjs\"}"
+    "start": "npm run ts && babel-watch ./dist/serveur/index.js",
+    "ts": "tsc"
   },
   "author": "",
   "license": "ISC",

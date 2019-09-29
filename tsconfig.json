@@ -20,6 +20,6 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true
   },
-  "include": ["./client/*", "./serveur/*"],
+  "include": ["./client/*", "./serveur/**/*"],
   "exclude": ["./node_modules"]
 }

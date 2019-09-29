@@ -2,13 +2,18 @@ var mysql = require("mysql");
 
 var con = mysql.createConnection({
   host: "localhost",
-  user: "yourusername",
-  password: "yourpassword"
+  user: "root",
+  password: "",
+  database: "pacman"
 });
 
 con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected!");
+  con.query("SELECT * FROM score", function(err, result, fields) {
+    if (err) throw err;
+    console.log("result");
+    console.log(result);
+  });
 });
 
-module.exports.con = con;
+export default con;

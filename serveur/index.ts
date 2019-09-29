@@ -1,4 +1,3 @@
-// import connection from "./bdd/MySqlConnect";
 const express = require("express");
 const multer = require("multer");
 const multipart = multer();
@@ -6,7 +5,9 @@ const multipart = multer();
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const config = require("../webpack.config.js");
+const config = require("../../webpack.config.js");
+
+import con from "./bdd/MySqlConnect";
 
 const app = express();
 const port = 9000;
@@ -31,7 +32,12 @@ app.use(express.static("./public"));
 
 //API
 app.get("/api/score", multipart.any(), function(req, res) {
-  res.json("{'coucou': 'coucou'}");
+  con.query("SELECT * FROM score", function(err, result, fields) {
+    if (err) throw err;
+    console.log("result");
+    console.log(result);
+    res.json(result);
+  });
 });
 
 app.listen(port, () => {
