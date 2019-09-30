@@ -6,16 +6,19 @@ const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("../../webpack.config.js");
+var cors = require("cors");
 
 import con from "./bdd/MySqlConnect";
 
 const app = express();
-const port = 9000;
+const port = 8000;
 
 const devServerEnabled = true;
 
 if (devServerEnabled) {
   const compiler = webpack(config);
+
+  app.use(cors());
 
   //Enable "webpack-dev-middleware"
   app.use(
@@ -34,8 +37,6 @@ app.use(express.static("./public"));
 app.get("/api/score", multipart.any(), function(req, res) {
   con.query("SELECT * FROM score", function(err, result, fields) {
     if (err) throw err;
-    console.log("result");
-    console.log(result);
     res.json(result);
   });
 });

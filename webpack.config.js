@@ -11,10 +11,13 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "public"),
     port: 9000,
-    host: `localhost`
+    host: `localhost`,
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    }
   },
   entry: {
-    app: ["./client/index.ts"]
+    app: ["babel-polyfill", "./client/index.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),

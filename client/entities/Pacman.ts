@@ -1,10 +1,4 @@
-import {
-  keyLeft,
-  keyUp,
-  keyRight,
-  keyDown,
-  escape
-} from "../config/KeyboardSettings";
+import * as keys from "../config/KeyboardSettings";
 import Configuration from "../config/Configuration";
 
 /**
@@ -53,24 +47,21 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
 
   //Initialise les events des boutons
   private initEvent(): void {
-    keyLeft.on("down", evt => {
+    keys.keyLeft.on("down", evt => {
       this.changeDirection(KeyCode.LEFT);
       this.play("walk-left");
     });
-    keyRight.on("down", evt => {
+    keys.keyRight.on("down", evt => {
       this.changeDirection(KeyCode.RIGHT);
       this.play("walk-right");
     });
-    keyUp.on("down", evt => {
+    keys.keyUp.on("down", evt => {
       this.changeDirection(KeyCode.UP);
       this.play("walk-top");
     });
-    keyDown.on("down", evt => {
+    keys.keyDown.on("down", evt => {
       this.changeDirection(KeyCode.DOWN);
       this.play("walk-bottom");
-    });
-    escape.on("down", evt => {
-      console.log("ESCAPE");
     });
   }
 }
