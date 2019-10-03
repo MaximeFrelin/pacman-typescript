@@ -1,10 +1,7 @@
 import "phaser";
-import Game from "./scenes/Game";
-import Menu from "./scenes/Menu";
-import * as keys from "./config/KeyboardSettings";
-import { configureKeyboardForScene } from "./config/KeyboardSettings";
-import ScoreService from "./services/ScoreService";
-import * as polyfill from "babel-polyfill";
+import Game from "./scenes/GameScene";
+import Menu from "./scenes/MenuScene";
+import Score from "./scenes/ScoreScene";
 
 //TODO A exporter : MFN
 export declare type GameConfig = {
@@ -33,11 +30,10 @@ window.onload = () => {
   game = new PacMan(config);
   game.scene.add("Game", Game);
   game.scene.add("Menu", Menu);
+  game.scene.add("Score", Score);
   game.scene.start("Game");
   game.scene.start("Menu");
 };
-
-function loadDatabase() {}
 
 export function getScenes() {
   return game.scene.getScenes();

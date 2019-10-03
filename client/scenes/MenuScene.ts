@@ -2,10 +2,10 @@ import * as keys from "../config/KeyboardSettings";
 import Configuration from "../config/Configuration";
 import { getScenes } from "../index";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
-import Game from "./Game";
+import Game from "./GameScene";
 import { Scene } from "phaser";
 import textConfig from "../config/Text";
-import Score from "./../transport/Score";
+import Score from "../transport/Score";
 import ScoreService from "../services/ScoreService";
 
 /**
@@ -28,7 +28,6 @@ export default class Menu extends Phaser.Scene {
     this.gameScene = this.scene.get("Game");
     configureKeyboardForScene(this);
     this.initEvent();
-    this.initScore();
   }
 
   //Appelé à chaque frame disponible
@@ -66,16 +65,16 @@ export default class Menu extends Phaser.Scene {
     this.pauseScoreButton.setInteractive();
 
     this.pauseScoreButton.on("pointerdown", evt => {
-      console.log(this.score);
+      this.scene.start("Score");
+      this.scene.setVisible(false, "Game");
     });
   }
 
+  /**
+   * Supprime le menu
+   */
   private destroyMenu(): void {
     this.pauseLabel.destroy();
     this.pauseScoreButton.destroy();
-  }
-
-  private async initScore() {
-    this.score = await new ScoreService().getAllScore();
   }
 }

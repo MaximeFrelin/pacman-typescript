@@ -9,7 +9,11 @@ var con = mysql.createConnection({
 
 con.connect(function(err) {
   if (err) throw err;
-  con.query("SELECT * FROM score", function(err, result, fields) {
+  con.query("SELECT * FROM score ORDER BY Score DESC LIMIT 5 ", function(
+    err,
+    result,
+    fields
+  ) {
     if (err) throw err;
   });
 });

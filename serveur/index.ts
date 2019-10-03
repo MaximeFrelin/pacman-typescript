@@ -35,8 +35,14 @@ app.use(express.static("./public"));
 
 //API
 app.get("/api/score", multipart.any(), function(req, res) {
-  con.query("SELECT * FROM score", function(err, result, fields) {
+  console.log("Je renvoie");
+  con.query("SELECT * FROM score ORDER BY Score DESC LIMIT 5 ", function(
+    err,
+    result,
+    fields
+  ) {
     if (err) throw err;
+    console.log(result);
     res.json(result);
   });
 });
