@@ -32,13 +32,13 @@ window.onload = () => {
   game.scene.add("Menu", Menu);
   game.scene.add("Score", Score);
   game.scene.start("Game");
-  game.scene.start("Menu");
 };
 
 export function getScenes(): Phaser.Scene[] {
   return game.scene.getScenes();
 }
 
+//TODO: Refacto dans un helper dedié
 export function displayScoreScene() {
   game.scene.start("Score");
   game.scene.sleep("Game");
@@ -50,4 +50,14 @@ export function hideScoreScene() {
   game.scene.wake("Game");
   game.scene.pause("Game");
   game.scene.wake("Menu");
+}
+
+export function displayMenu() {
+  game.scene.start("Menu");
+  game.scene.pause("Game");
+}
+
+export function hideMenu() {
+  game.scene.stop("Menu");
+  game.scene.resume("Game");
 }

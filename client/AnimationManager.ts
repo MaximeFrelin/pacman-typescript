@@ -30,6 +30,14 @@ export default class AnimationManager {
       "pac-man-top-2",
       "./assets/pacman/pac-man-top-2.png"
     );
+    this.currentscene.load.image(
+      "pac-man-bottom-1",
+      "./assets/pacman/pac-man-bottom-1.png"
+    );
+    this.currentscene.load.image(
+      "pac-man-bottom-2",
+      "./assets/pacman/pac-man-bottom-2.png"
+    );
   }
 
   public loadGhost() {

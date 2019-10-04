@@ -3,6 +3,9 @@ import * as keys from "../config/KeyboardSettings";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
 import Pacman from "../entities/Pacman";
 import AnimationManager from "../AnimationManager";
+import { hideMenu } from "../index";
+import { displayMenu } from "./../index";
+import textConfig from "../config/Text";
 
 export default class Game extends Phaser.Scene {
   pacman: Pacman = null;
@@ -30,5 +33,14 @@ export default class Game extends Phaser.Scene {
   /**
    * Initialise les events qui concerne la scène en globale
    */
-  private initEvent() {}
+  private initEvent() {
+    //hack font pour charger les fonts en globales
+    this.add.text(0, 0, "hack", {
+      font: "0.1px atariCustom",
+      fill: "#FFFFFF"
+    });
+    keys.escape.on("down", evt => {
+      displayMenu();
+    });
+  }
 }
