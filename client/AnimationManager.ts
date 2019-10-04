@@ -184,7 +184,7 @@ export default class AnimationManager {
         { key: "pac-man-right-1", frame: "" },
         { key: "pac-man-right-2", frame: "" }
       ],
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1
     });
     this.currentscene.anims.create({
@@ -193,7 +193,7 @@ export default class AnimationManager {
         { key: "pac-man-left-1", frame: "" },
         { key: "pac-man-left-2", frame: "" }
       ],
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1
     });
     this.currentscene.anims.create({
@@ -202,7 +202,7 @@ export default class AnimationManager {
         { key: "pac-man-top-1", frame: "" },
         { key: "pac-man-top-2", frame: "" }
       ],
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1
     });
     this.currentscene.anims.create({
@@ -211,7 +211,7 @@ export default class AnimationManager {
         { key: "pac-man-bottom-1", frame: "" },
         { key: "pac-man-bottom-2", frame: "" }
       ],
-      frameRate: 10,
+      frameRate: 20,
       repeat: -1
     });
   }

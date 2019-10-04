@@ -62,7 +62,7 @@ export default class ScoreScene extends Phaser.Scene {
     //RED
     let redGhosts = new Phaser.GameObjects.Sprite(
       this,
-      300,
+      310,
       500,
       "ghost-red-right-1"
     );
@@ -72,7 +72,7 @@ export default class ScoreScene extends Phaser.Scene {
     //BROWN
     let brownGhosts = new Phaser.GameObjects.Sprite(
       this,
-      350,
+      360,
       500,
       "ghost-brown-right-1"
     );
@@ -82,7 +82,7 @@ export default class ScoreScene extends Phaser.Scene {
     //CYAN
     let cyanGhosts = new Phaser.GameObjects.Sprite(
       this,
-      400,
+      410,
       500,
       "ghost-cyan-right-1"
     );
@@ -92,7 +92,7 @@ export default class ScoreScene extends Phaser.Scene {
     //PURPLE
     let purpleGhosts = new Phaser.GameObjects.Sprite(
       this,
-      450,
+      460,
       500,
       "ghost-purple-right-1"
     );

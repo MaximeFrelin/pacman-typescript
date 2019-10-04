@@ -13,7 +13,7 @@ export default {
     }
   },
   score: {
-    x: 290,
+    x: 295,
     y: 220,
     padding: {
       left: 30,
