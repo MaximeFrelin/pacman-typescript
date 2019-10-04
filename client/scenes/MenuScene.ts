@@ -1,6 +1,6 @@
 import * as keys from "../config/KeyboardSettings";
 import Configuration from "../config/Configuration";
-import { getScenes } from "../index";
+import { getScenes, startScoreMenu, displayScoreScene } from "../index";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
 import Game from "./GameScene";
 import { Scene } from "phaser";
@@ -28,6 +28,8 @@ export default class Menu extends Phaser.Scene {
     this.gameScene = this.scene.get("Game");
     configureKeyboardForScene(this);
     this.initEvent();
+    this.scene.setVisible(false, "Menu");
+    this.displayMenu();
   }
 
   //Appelé à chaque frame disponible
@@ -48,10 +50,10 @@ export default class Menu extends Phaser.Scene {
    */
   private pauseManager(isPause: boolean) {
     if (isPause) {
-      this.destroyMenu();
+      this.scene.setVisible(false, "Menu");
       this.gameScene.scene.resume();
     } else {
-      this.displayMenu();
+      this.scene.setVisible(true, "Menu");
       this.gameScene.scene.pause();
     }
   }
@@ -65,16 +67,7 @@ export default class Menu extends Phaser.Scene {
     this.pauseScoreButton.setInteractive();
 
     this.pauseScoreButton.on("pointerdown", evt => {
-      this.scene.start("Score");
-      this.scene.setVisible(false, "Game");
+      displayScoreScene();
     });
-  }
-
-  /**
-   * Supprime le menu
-   */
-  private destroyMenu(): void {
-    this.pauseLabel.destroy();
-    this.pauseScoreButton.destroy();
   }
 }

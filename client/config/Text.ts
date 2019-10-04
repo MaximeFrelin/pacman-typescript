@@ -7,13 +7,13 @@ export default {
     y: 100,
     text: "Pause",
     style: {
-      fontSize: "64px",
+      fontSize: "45px",
       fontFamily: familyFont,
       color: "#746D69"
     }
   },
   score: {
-    x: 295,
+    x: 290,
     y: 220,
     padding: {
       left: 30,
@@ -23,7 +23,24 @@ export default {
     },
     text: "Voir les scores",
     style: {
-      fontSize: "15px",
+      fontSize: "10px",
+      fontFamily: familyFont,
+      color: "#000000",
+      backgroundColor: "#cccc00"
+    }
+  },
+  btnScoreRetour: {
+    x: 325,
+    y: 550,
+    padding: {
+      left: 30,
+      right: 30,
+      top: 15,
+      bottom: 15
+    },
+    text: "Retour",
+    style: {
+      fontSize: "10px",
       fontFamily: familyFont,
       color: "#000000",
       backgroundColor: "#cccc00"

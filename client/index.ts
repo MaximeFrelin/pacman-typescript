@@ -35,6 +35,19 @@ window.onload = () => {
   game.scene.start("Menu");
 };
 
-export function getScenes() {
+export function getScenes(): Phaser.Scene[] {
   return game.scene.getScenes();
+}
+
+export function displayScoreScene() {
+  game.scene.start("Score");
+  game.scene.sleep("Game");
+  game.scene.sleep("Menu");
+}
+
+export function hideScoreScene() {
+  game.scene.stop("Score");
+  game.scene.wake("Game");
+  game.scene.pause("Game");
+  game.scene.wake("Menu");
 }

@@ -4,18 +4,25 @@ import ScoreService from "../services/ScoreService";
 import Score from "../transport/Score";
 import moment from "moment";
 import { getColorArray } from "../config/Text";
+import AnimationManager from "./../AnimationManager";
+import { hideScoreScene } from "../index";
 
 export default class ScoreScene extends Phaser.Scene {
   private title: Phaser.GameObjects.Text;
   private score: Score[];
 
+  private animationManager: AnimationManager;
+
   protected preload() {
-    //Obligatoire de loader les assets dans le preload
+    this.animationManager = new AnimationManager(this);
+    this.animationManager.loadGhost();
   }
 
   public create() {
     this.initScore();
     this.initText();
+    this.animationManager.createGhostAnimationForScore();
+    this.displayGhosts();
   }
 
   //Appelé à chaque frame disponible
@@ -27,6 +34,9 @@ export default class ScoreScene extends Phaser.Scene {
     this.displayScore();
   }
 
+  /**
+   * Affiche touts les scores à l'écran
+   */
   private displayScore(): void {
     let colors = getColorArray();
     let y = 150;
@@ -48,13 +58,62 @@ export default class ScoreScene extends Phaser.Scene {
     });
   }
 
+  private displayGhosts(): void {
+    //RED
+    let redGhosts = new Phaser.GameObjects.Sprite(
+      this,
+      300,
+      500,
+      "ghost-red-right-1"
+    );
+    redGhosts.scale = 2;
+    redGhosts.play("ghost-red-stand-by");
+    this.add.existing(redGhosts);
+    //BROWN
+    let brownGhosts = new Phaser.GameObjects.Sprite(
+      this,
+      350,
+      500,
+      "ghost-brown-right-1"
+    );
+    brownGhosts.scale = 2;
+    brownGhosts.play("ghost-brown-stand-by");
+    this.add.existing(brownGhosts);
+    //CYAN
+    let cyanGhosts = new Phaser.GameObjects.Sprite(
+      this,
+      400,
+      500,
+      "ghost-cyan-right-1"
+    );
+    cyanGhosts.scale = 2;
+    cyanGhosts.play("ghost-cyan-stand-by");
+    this.add.existing(cyanGhosts);
+    //PURPLE
+    let purpleGhosts = new Phaser.GameObjects.Sprite(
+      this,
+      450,
+      500,
+      "ghost-purple-right-1"
+    );
+    purpleGhosts.scale = 2;
+    purpleGhosts.play("ghost-purple-stand-by");
+    this.add.existing(purpleGhosts);
+  }
+
   /**
-   * Ajoute tous les textes à la scène
+   * Ajoute les textes statiques à la scène
    */
   private initText() {
     this.make.text(textConfig.scoreTitle);
     this.make.text(textConfig.scorePseudo);
     this.make.text(textConfig.scoreNumber);
     this.make.text(textConfig.scoreDate);
+    let btnScoreRetour = this.make.text(textConfig.btnScoreRetour);
+
+    btnScoreRetour.setInteractive();
+    btnScoreRetour.on("pointerdown", evt => {
+      hideScoreScene();
+    });
   }
 }
