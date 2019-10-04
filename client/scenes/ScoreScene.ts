@@ -1,8 +1,9 @@
 import * as Phaser from "phaser";
-import textConfig from "../config/Text";
+import textConfig, { colors } from "../config/Text";
 import ScoreService from "../services/ScoreService";
 import Score from "../transport/Score";
 import moment from "moment";
+import { getColorArray } from "../config/Text";
 
 export default class ScoreScene extends Phaser.Scene {
   private title: Phaser.GameObjects.Text;
@@ -23,15 +24,24 @@ export default class ScoreScene extends Phaser.Scene {
   //Récupère les scores en GET et on n'en affiche que 5 à chaque fois
   private async initScore() {
     this.score = await new ScoreService().getAllScore();
+    this.displayScore();
+  }
 
+  private displayScore(): void {
+    let colors = getColorArray();
     let y = 150;
-    this.score.forEach(element => {
-      this.make.text(textConfig.pseudoElement(element.Pseudo, y));
-      this.make.text(textConfig.scoreElement(element.Score.toString(), y));
+    this.score.forEach((element, index) => {
+      this.make.text(
+        textConfig.pseudoElement(element.Pseudo, y, colors[index])
+      );
+      this.make.text(
+        textConfig.scoreElement(element.Score.toString(), y, colors[index])
+      );
       this.make.text(
         textConfig.dateElement(
           moment(element.CreationDate).format("DD/MM/YYYY"),
-          y
+          y,
+          colors[index]
         )
       );
       y += 50;

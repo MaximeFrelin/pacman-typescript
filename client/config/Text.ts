@@ -1,3 +1,6 @@
+const familyFont: string = "AtariCustom";
+const fontSizeScoreScene: number = 15;
+
 export default {
   pause: {
     x: 285,
@@ -5,7 +8,7 @@ export default {
     text: "Pause",
     style: {
       fontSize: "64px",
-      fontFamily: "Arial",
+      fontFamily: familyFont,
       color: "#746D69"
     }
   },
@@ -21,7 +24,7 @@ export default {
     text: "Voir les scores",
     style: {
       fontSize: "15px",
-      fontFamily: "Arial",
+      fontFamily: familyFont,
       color: "#000000",
       backgroundColor: "#cccc00"
     }
@@ -31,20 +34,20 @@ export default {
     y: 20,
     text: "HIGH SCORE",
     style: {
-      fontSize: "20px",
-      fontFamily: "Arial",
+      fontSize: fontSizeScoreScene + "px",
+      fontFamily: familyFont,
       color: "#FFFFFF",
       backgroundColor: "#000000"
     }
   },
   scorePseudo: {
-    x: 200,
+    x: 150,
     y: 100,
     text: "PSEUDO",
     style: {
-      fontSize: "20px",
-      fontFamily: "Arial",
-      color: "#FFCC00",
+      fontSize: fontSizeScoreScene + "px",
+      fontFamily: familyFont,
+      color: "#FFB851",
       backgroundColor: "#000000"
     }
   },
@@ -53,60 +56,76 @@ export default {
     y: 100,
     text: "SCORE",
     style: {
-      fontSize: "20px",
-      fontFamily: "Arial",
-      color: "#0000F8",
+      fontSize: fontSizeScoreScene + "px",
+      fontFamily: familyFont,
+      color: "#FFB851",
       backgroundColor: "#000000"
     }
   },
   scoreDate: {
-    x: 500,
+    x: 550,
     y: 100,
     text: "DATE",
     style: {
-      fontSize: "20px",
-      fontFamily: "Arial",
-      color: "#FE0000",
+      fontSize: fontSizeScoreScene + "px",
+      fontFamily: familyFont,
+      color: "#FFB851",
       backgroundColor: "#000000"
     }
   },
-  pseudoElement: (pseudo: string, y: number): any => {
+  pseudoElement: (pseudo: string, y: number, color: string): any => {
     return {
-      x: 190,
+      x: 140,
       y: y,
       text: pseudo,
       style: {
-        fontSize: "20px",
-        fontFamily: "Arial",
-        color: "#FFCC00",
+        fontSize: fontSizeScoreScene + "px",
+        fontFamily: familyFont,
+        color: color,
         backgroundColor: "#000000"
       }
     };
   },
-  scoreElement: (score: string, y: number): any => {
+  scoreElement: (score: string, y: number, color: string): any => {
     return {
       x: 350,
       y: y,
       text: score,
       style: {
-        fontSize: "20px",
-        fontFamily: "Arial",
-        color: "#0000F8",
+        fontSize: fontSizeScoreScene + "px",
+        fontFamily: familyFont,
+        color: color,
         backgroundColor: "#000000"
       }
     };
   },
-  dateElement: (date: string, y: number): any => {
+  dateElement: (date: string, y: number, color: string): any => {
     return {
-      x: 480,
+      x: 530,
       y: y,
       text: date,
       style: {
-        fontSize: "20px",
-        fontFamily: "Arial",
-        color: "#FE0000",
+        fontSize: fontSizeScoreScene + "px",
+        fontFamily: familyFont,
+        color: color,
         backgroundColor: "#000000"
       }
     };
   }
 };
+
+let colors = {
+  RED: "#FE0000",
+  CYAN: "#00FFFF",
+  VIOLET: "#FEB8FE",
+  JAUNE: "#FFCC00",
+  BLUE: "#0000F8"
+};
+
+export { colors };
+
+export function getColorArray(): any[] {
+  return Object.keys(colors).map(function(key) {
+    return [colors[key]];
+  });
+}
