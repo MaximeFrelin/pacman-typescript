@@ -2,6 +2,7 @@ import "phaser";
 import Game from "./scenes/GameScene";
 import Menu from "./scenes/MenuScene";
 import Score from "./scenes/ScoreScene";
+import LoadScene from "./scenes/LoadScene";
 
 //TODO : Mettre l'animation manager dans une scène !!!!!!! IMPORTANT
 
@@ -18,12 +19,13 @@ export declare type GameConfig = {
       debug: boolean;
     };
   };
+  scene: any[];
 };
 
 export var game: Phaser.Game;
 
 const config: GameConfig = {
-  title: "Starfall",
+  title: "Pacman",
   width: 800,
   height: 600,
   parent: "game",
@@ -31,9 +33,10 @@ const config: GameConfig = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
-  }
+  },
+  scene: [LoadScene]
 };
 export class PacMan extends Phaser.Game {
   constructor(config: GameConfig) {
@@ -42,10 +45,11 @@ export class PacMan extends Phaser.Game {
 }
 window.onload = () => {
   game = new PacMan(config);
-  game.scene.add("Game", Game);
   game.scene.add("Menu", Menu);
   game.scene.add("Score", Score);
-  game.scene.start("Game");
+  game.scene.add("Game", Game);
+
+  game.scene.start("Load");
 };
 
 export function getScenes(): Phaser.Scene[] {

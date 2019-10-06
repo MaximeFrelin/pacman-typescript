@@ -51,7 +51,9 @@ export default class Menu extends Phaser.Scene {
    */
   private displayMenu(): void {
     this.pauseLabel = this.make.text(textConfig.pause);
+    this.pauseLabel.setDepth(1000);
     this.pauseScoreButton = this.make.text(textConfig.score);
+    this.pauseScoreButton.setDepth(1000);
     this.pauseScoreButton.setInteractive();
   }
 }

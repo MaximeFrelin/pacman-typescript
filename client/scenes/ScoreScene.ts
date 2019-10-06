@@ -4,24 +4,17 @@ import ScoreService from "../services/ScoreService";
 import Score from "../transport/Score";
 import moment from "moment";
 import { getColorArray } from "../config/Text";
-import AnimationManager from "./../AnimationManager";
 import { hideScoreScene } from "../index";
 
 export default class ScoreScene extends Phaser.Scene {
   private title: Phaser.GameObjects.Text;
   private score: Score[];
 
-  private animationManager: AnimationManager;
-
-  protected preload() {
-    this.animationManager = new AnimationManager(this);
-    this.animationManager.loadGhost();
-  }
+  protected preload() {}
 
   public create() {
     this.initScore();
     this.initText();
-    this.animationManager.createGhostAnimationForScore();
     this.displayGhosts();
   }
 

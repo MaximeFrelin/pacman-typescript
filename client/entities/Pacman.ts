@@ -13,11 +13,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 200, 200, "pac-man-right-1");
     this.currentScene = currentScene;
-
-    this.currentScene.add.group;
-
-    // this.currentScene.physics.overlap();
-
+    this.setDepth(1);
     this.currentScene.add.existing(this);
     this.currentScene.physics.add.existing(this);
     this.setCollideWorldBounds(true);
