@@ -1,17 +1,26 @@
 import * as keys from "../config/KeyboardSettings";
 import Configuration from "../config/Configuration";
+import GameManager from "../GameManager";
+import SuperGomme from "./SuperGomme";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
  */
-export default class Pacman extends Phaser.GameObjects.Sprite {
+export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   currentScene: Phaser.Scene;
   currentKey: KeyCode;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 200, 200, "pac-man-right-1");
     this.currentScene = currentScene;
+
+    this.currentScene.add.group;
+
+    // this.currentScene.physics.overlap();
+
     this.currentScene.add.existing(this);
+    this.currentScene.physics.add.existing(this);
+    this.setCollideWorldBounds(true);
     this.play("walk-right");
     this.initEvent();
   }
@@ -19,6 +28,14 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
   //Appelé à chaque frame disponible
   preUpdate() {
     this.anims.update(10, 10);
+    this.currentScene.physics.overlap(
+      this,
+      GameManager.PowerUps,
+      this.handleOverlap,
+      null,
+      this
+    );
+
     this.move();
   }
 
@@ -63,6 +80,26 @@ export default class Pacman extends Phaser.GameObjects.Sprite {
       this.changeDirection(KeyCode.DOWN);
       this.play("walk-bottom");
     });
+  }
+
+  /**
+   * Gère les collisions
+   * @param object1 - Concerne l'objet courant
+   * @param object2 - Concerne la classe avec qui je suis entré en collision
+   */
+  private handleOverlap(object1, object2) {
+    if (object2 instanceof SuperGomme) {
+      this.eatSuperGomme(object2);
+    }
+  }
+
+  /**
+   * Mange la super gomme et active le pouvoir
+   */
+  private eatSuperGomme(superGomme: SuperGomme) {
+    GameManager.PowerUps.remove(superGomme);
+    superGomme.destroy();
+    //Lancé les events des fantomes pour pouvoir les manger
   }
 }
 

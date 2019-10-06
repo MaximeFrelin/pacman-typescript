@@ -1,20 +1,21 @@
-import Configuration from "../config/Configuration";
 import * as keys from "../config/KeyboardSettings";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
 import Pacman from "../entities/Pacman";
 import AnimationManager from "../AnimationManager";
-import { hideMenu } from "../index";
 import { displayMenu } from "./../index";
-import textConfig from "../config/Text";
+import SuperGomme from "./../entities/SuperGomme";
+import GameManager from "../GameManager";
 
 export default class Game extends Phaser.Scene {
-  pacman: Pacman = null;
-  animationManager: AnimationManager;
+  private pacman: Pacman = null;
+  private superGommes: SuperGomme[] = [];
+  private animationManager: AnimationManager;
 
   protected preload() {
     //Obligatoire de loader les assets dans le preload
     this.animationManager = new AnimationManager(this);
     this.animationManager.loadPacman();
+    this.animationManager.loadObject();
   }
 
   /**
@@ -22,13 +23,23 @@ export default class Game extends Phaser.Scene {
    */
   public create() {
     configureKeyboardForScene(this);
-    this.animationManager.createPacmanAnimation();
-    this.pacman = new Pacman(this);
+    this.createGroups();
     this.initEvent();
+
+    //Création des animations de la scène
+    this.animationManager.createPacmanAnimation();
+    this.initGameObjects();
+
+    //C
+    this.physics.world.setBoundsCollision();
   }
 
   //Appelé à chaque frame disponible
   public update() {}
+
+  private createGroups() {
+    GameManager.PowerUps = this.physics.add.group();
+  }
 
   /**
    * Initialise les events qui concerne la scène en globale
@@ -39,8 +50,19 @@ export default class Game extends Phaser.Scene {
       font: "0.1px atariCustom",
       fill: "#FFFFFF"
     });
-    keys.escape.on("down", evt => {
+    keys.escape.on("down", () => {
       displayMenu();
     });
+  }
+
+  /**
+   * Instancie les objets de la scène
+   */
+  private initGameObjects(): void {
+    this.pacman = new Pacman(this);
+    this.superGommes.push(new SuperGomme(this));
+
+    GameManager.PowerUps.addMultiple(this.superGommes);
+    GameManager.Player = this.pacman;
   }
 }

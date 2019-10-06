@@ -3,6 +3,8 @@ import Game from "./scenes/GameScene";
 import Menu from "./scenes/MenuScene";
 import Score from "./scenes/ScoreScene";
 
+//TODO : Mettre l'animation manager dans une scène !!!!!!! IMPORTANT
+
 //TODO A exporter : MFN
 export declare type GameConfig = {
   title: string;
@@ -10,6 +12,12 @@ export declare type GameConfig = {
   height: number;
   parent: string;
   backgroundColor: string;
+  physics: {
+    default: string;
+    arcade: {
+      debug: boolean;
+    };
+  };
 };
 
 export var game: Phaser.Game;
@@ -19,7 +27,13 @@ const config: GameConfig = {
   width: 800,
   height: 600,
   parent: "game",
-  backgroundColor: "#000000"
+  backgroundColor: "#000000",
+  physics: {
+    default: "arcade",
+    arcade: {
+      debug: false
+    }
+  }
 };
 export class PacMan extends Phaser.Game {
   constructor(config: GameConfig) {

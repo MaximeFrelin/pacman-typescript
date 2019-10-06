@@ -175,6 +175,13 @@ export default class AnimationManager {
     );
   }
 
+  public loadObject(): void {
+    this.currentscene.load.image(
+      "super-gomme",
+      "./assets/objects/super-gomme.png"
+    );
+  }
+
   public loadMap() {}
 
   public createPacmanAnimation() {
