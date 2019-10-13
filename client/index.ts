@@ -24,20 +24,25 @@ export declare type GameConfig = {
 
 export var game: Phaser.Game;
 
-const config: GameConfig = {
+const config: any = {
+  type: Phaser.AUTO,
   title: "Pacman",
-  width: 800,
-  height: 600,
+  width: 896,
+  height: 992,
   parent: "game",
   backgroundColor: "#000000",
   physics: {
     default: "arcade",
     arcade: {
-      debug: true
+      // gravity: { x: 0, y: 0 },
+      debug: false
     }
   },
   scene: [LoadScene]
 };
+
+export { config as Config };
+
 export class PacMan extends Phaser.Game {
   constructor(config: GameConfig) {
     super(config);
@@ -65,17 +70,15 @@ export function displayScoreScene() {
 
 export function hideScoreScene() {
   game.scene.stop("Score");
-  game.scene.wake("Game");
-  game.scene.pause("Game");
   game.scene.wake("Menu");
 }
 
 export function displayMenu() {
   game.scene.start("Menu");
-  game.scene.pause("Game");
+  game.scene.sleep("Game");
 }
 
 export function hideMenu() {
   game.scene.stop("Menu");
-  game.scene.resume("Game");
+  game.scene.wake("Game");
 }

@@ -2,6 +2,8 @@ import * as keys from "../config/KeyboardSettings";
 import Configuration from "../config/Configuration";
 import GameManager from "../GameManager";
 import SuperGomme from "./SuperGomme";
+import { Config } from "..";
+import Gomme from "./Gomme";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
@@ -9,14 +11,16 @@ import SuperGomme from "./SuperGomme";
 export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   currentScene: Phaser.Scene;
   currentKey: KeyCode;
+  IsWraping: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 200, 200, "pac-man-right-1");
     this.currentScene = currentScene;
-    this.setDepth(1);
+    this.setDepth(2);
     this.currentScene.add.existing(this);
-    this.currentScene.physics.add.existing(this);
-    this.setCollideWorldBounds(true);
+    this.currentScene.physics.add.existing(this, false);
+    // this.setCollideWorldBounds(true);
+    this.scale = 3.5;
     this.play("walk-right");
     this.initEvent();
   }
@@ -31,7 +35,6 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
       null,
       this
     );
-
     this.move();
   }
 
@@ -39,16 +42,16 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   public move(): void {
     switch (this.currentKey) {
       case KeyCode.LEFT:
-        this.x -= Configuration.PlayerSpeed;
+        this.setVelocity(Configuration.PlayerSpeed * -100, 0);
         break;
       case KeyCode.UP:
-        this.y -= Configuration.PlayerSpeed;
+        this.setVelocity(0, Configuration.PlayerSpeed * -100);
         break;
       case KeyCode.RIGHT:
-        this.x += Configuration.PlayerSpeed;
+        this.setVelocity(Configuration.PlayerSpeed * 100, 0);
         break;
       case KeyCode.DOWN:
-        this.y += Configuration.PlayerSpeed;
+        this.setVelocity(0, Configuration.PlayerSpeed * 100);
         break;
     }
   }
@@ -84,7 +87,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
    * @param object2 - Concerne la classe avec qui je suis entré en collision
    */
   private handleOverlap(object1, object2) {
-    if (object2 instanceof SuperGomme) {
+    if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
       this.eatSuperGomme(object2);
     }
   }
@@ -92,7 +95,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   /**
    * Mange la super gomme et active le pouvoir
    */
-  private eatSuperGomme(superGomme: SuperGomme) {
+  private eatSuperGomme(superGomme: SuperGomme | Gomme) {
     GameManager.PowerUps.remove(superGomme);
     superGomme.destroy();
     //Lancé les events des fantomes pour pouvoir les manger

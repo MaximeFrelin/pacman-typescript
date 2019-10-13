@@ -165,9 +165,12 @@ export default class LoadScene extends Phaser.Scene {
 
   public loadObject(): void {
     this.load.image("super-gomme", "./assets/objects/super-gomme.png");
+    this.load.image("gomme", "./assets/objects/gomme.png");
   }
 
-  public loadMap() {}
+  public loadMap() {
+    this.load.image("horizontal-wall", "./assets/wall/horizontal-wall.png");
+  }
 
   public createPacmanAnimation() {
     this.anims.create({
