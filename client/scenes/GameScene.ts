@@ -104,13 +104,13 @@ export default class Game extends Phaser.Scene {
     });
 
     this.gommeLayer.objects.forEach(gomme => {
-      console.log(gomme);
-
       this.gommes.push(new Gomme(this, gomme.x * 4, gomme.y * 4));
     });
 
     GameManager.PowerUps.addMultiple(this.superGommes);
     GameManager.PowerUps.addMultiple(this.gommes);
+
+    console.log(this.mapLayer.culledTiles.length);
 
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
     // this.mapLayer.renderDebug(debugGraphics, {
