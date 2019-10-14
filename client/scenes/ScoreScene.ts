@@ -55,41 +55,41 @@ export default class ScoreScene extends Phaser.Scene {
     //RED
     let redGhosts = new Phaser.GameObjects.Sprite(
       this,
-      310,
+      300,
       500,
       "ghost-red-right-1"
     );
-    redGhosts.scale = 2;
+    redGhosts.scale = 4;
     redGhosts.play("ghost-red-stand-by");
     this.add.existing(redGhosts);
     //BROWN
     let brownGhosts = new Phaser.GameObjects.Sprite(
       this,
-      360,
+      380,
       500,
       "ghost-brown-right-1"
     );
-    brownGhosts.scale = 2;
+    brownGhosts.scale = 4;
     brownGhosts.play("ghost-brown-stand-by");
     this.add.existing(brownGhosts);
     //CYAN
     let cyanGhosts = new Phaser.GameObjects.Sprite(
       this,
-      410,
+      460,
       500,
       "ghost-cyan-right-1"
     );
-    cyanGhosts.scale = 2;
+    cyanGhosts.scale = 4;
     cyanGhosts.play("ghost-cyan-stand-by");
     this.add.existing(cyanGhosts);
     //PURPLE
     let purpleGhosts = new Phaser.GameObjects.Sprite(
       this,
-      460,
+      540,
       500,
       "ghost-purple-right-1"
     );
-    purpleGhosts.scale = 2;
+    purpleGhosts.scale = 4;
     purpleGhosts.play("ghost-purple-stand-by");
     this.add.existing(purpleGhosts);
   }

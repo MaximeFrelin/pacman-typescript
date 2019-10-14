@@ -1,19 +1,19 @@
 const familyFont: string = "AtariCustom";
-const fontSizeScoreScene: number = 15;
+const fontSizeScoreScene: number = 20;
 
 export default {
   pause: {
-    x: 285,
+    x: 250,
     y: 100,
     text: "Pause",
     style: {
-      fontSize: "45px",
+      fontSize: "80px",
       fontFamily: familyFont,
       color: "#746D69"
     }
   },
   score: {
-    x: 295,
+    x: 270,
     y: 220,
     padding: {
       left: 30,
@@ -23,7 +23,7 @@ export default {
     },
     text: "Voir les scores",
     style: {
-      fontSize: "10px",
+      fontSize: "20px",
       fontFamily: familyFont,
       color: "#000000",
       backgroundColor: "#cccc00"
@@ -40,7 +40,7 @@ export default {
     },
     text: "Retour",
     style: {
-      fontSize: "10px",
+      fontSize: "20px",
       fontFamily: familyFont,
       color: "#000000",
       backgroundColor: "#cccc00"
@@ -58,7 +58,7 @@ export default {
     }
   },
   scorePseudo: {
-    x: 150,
+    x: 100,
     y: 100,
     text: "PSEUDO",
     style: {
@@ -69,7 +69,7 @@ export default {
     }
   },
   scoreNumber: {
-    x: 350,
+    x: 370,
     y: 100,
     text: "SCORE",
     style: {
@@ -80,7 +80,7 @@ export default {
     }
   },
   scoreDate: {
-    x: 550,
+    x: 620,
     y: 100,
     text: "DATE",
     style: {
@@ -92,7 +92,7 @@ export default {
   },
   pseudoElement: (pseudo: string, y: number, color: string): any => {
     return {
-      x: 140,
+      x: 90,
       y: y,
       text: pseudo,
       style: {
@@ -105,7 +105,7 @@ export default {
   },
   scoreElement: (score: string, y: number, color: string): any => {
     return {
-      x: 350,
+      x: 330,
       y: y,
       text: score,
       style: {
@@ -118,7 +118,7 @@ export default {
   },
   dateElement: (date: string, y: number, color: string): any => {
     return {
-      x: 530,
+      x: 570,
       y: y,
       text: date,
       style: {
