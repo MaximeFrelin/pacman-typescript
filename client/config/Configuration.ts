@@ -1,3 +1,3 @@
 export default {
-  PlayerSpeed: 2
+  PlayerSpeed: 1.7
 };

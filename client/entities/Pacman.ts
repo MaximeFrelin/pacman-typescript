@@ -14,7 +14,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   IsWraping: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 200, 200, "pac-man-right-1");
+    super(currentScene, 210, 180, "pac-man-right-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
@@ -27,7 +27,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
 
   //Appelé à chaque frame disponible
   preUpdate() {
-    this.anims.update(10, 10);
+    this.anims.update(1, 9);
     this.currentScene.physics.overlap(
       this,
       GameManager.PowerUps,
