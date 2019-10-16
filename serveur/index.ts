@@ -8,7 +8,7 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("../../webpack.config.js");
 var cors = require("cors");
 
-import con from "./bdd/MySqlConnect";
+//import con from "./bdd/MySqlConnect";
 
 const app = express();
 const port = 8000;
@@ -35,7 +35,7 @@ app.use(express.static("./public"));
 
 //API
 app.get("/api/score", multipart.any(), function(req, res) {
-  console.log("Je renvoie");
+  /*console.log("Je renvoie");
   con.query("SELECT * FROM score ORDER BY Score DESC LIMIT 5 ", function(
     err,
     result,
@@ -44,7 +44,7 @@ app.get("/api/score", multipart.any(), function(req, res) {
     if (err) throw err;
     console.log(result);
     res.json(result);
-  });
+  });*/
 });
 
 app.listen(port, () => {

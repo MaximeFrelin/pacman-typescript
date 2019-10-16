@@ -90,6 +90,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
       this.eatSuperGomme(object2);
     }
+    console.log(GameManager.Score);
   }
 
   /**
@@ -98,6 +99,11 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   private eatSuperGomme(superGomme: SuperGomme | Gomme) {
     GameManager.PowerUps.remove(superGomme);
     superGomme.destroy();
+    if(superGomme instanceof SuperGomme) {
+      GameManager.Score += 1000;
+    }else {
+      GameManager.Score += 200;
+    }
     //Lancé les events des fantomes pour pouvoir les manger
   }
 }

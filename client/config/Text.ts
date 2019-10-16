@@ -116,6 +116,46 @@ export default {
       }
     };
   },
+  win: {
+    x: 130,
+    y: 275,
+    text: "Vous avez gagne !",
+    style: {
+      fontSize: "40px",
+      fontFamily: familyFont,
+      color: "#746D69"
+    }
+  },
+  recommencer: {
+    x: 185,
+    y: 350,
+    padding: {
+      left: 30,
+      right: 30,
+      top: 15,
+      bottom: 15
+    },
+    text: "Recommencer une partie",
+    style: {
+      fontSize: "20px",
+      fontFamily: familyFont,
+      color: "#000000",
+      backgroundColor: "#cccc00"
+    }
+  },
+  Scoring: (score: number): any => {
+    return {
+      x: 275,
+      y: 180,
+      text: "Votre score : " + score,
+      style: {
+        fontSize: fontSizeScoreScene + "px",
+        fontFamily: familyFont,
+        color: "#FFFFFF",
+        backgroundColor: "#000000"
+      }
+    };
+  },
   dateElement: (date: string, y: number, color: string): any => {
     return {
       x: 570,

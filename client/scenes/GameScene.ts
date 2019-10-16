@@ -1,7 +1,7 @@
 import * as keys from "../config/KeyboardSettings";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
 import Pacman from "../entities/Pacman";
-import { displayMenu } from "./../index";
+import { displayMenu, displayWin } from "./../index";
 import SuperGomme from "./../entities/SuperGomme";
 import GameManager from "../GameManager";
 import HorizontalWall from "../entities/wall/HorizontalWall";
@@ -38,12 +38,17 @@ export default class Game extends Phaser.Scene {
     //Création de la map
     this.createMap();
 
+    GameManager.Score = 0;
+
     //Activation des collisions sur les bords de l'écran
     this.physics.world.setBoundsCollision();
   }
 
   //Appelé à chaque frame disponible
   public update() {
+    if (GameManager.PowerUps.getLength() == 0) {
+      displayWin();
+    }
     // this.mapLayer.removeTileAtWorldXY(this.pacman.x, this.pacman.y);
     // this.mapLayer.removeTileAt(this.pacman.x, this.pacman.y);
   }
@@ -97,21 +102,27 @@ export default class Game extends Phaser.Scene {
     // GameManager.Walls.add(mapLayer);
     this.physics.add.collider(this.pacman, this.mapLayer);
 
-    this.superGommeLayer.objects.forEach(superGomme => {
+    /*this.superGommeLayer.objects.forEach(superGomme => {
       this.superGommes.push(
         new SuperGomme(this, superGomme.x * 4, superGomme.y * 4)
       );
-    });
+    });*/
 
-    this.gommeLayer.objects.forEach(gomme => {
+    /*this.gommeLayer.objects.forEach(gomme => {
       this.gommes.push(new Gomme(this, gomme.x * 4, gomme.y * 4));
-    });
+
+    });*/
+    this.gommes.push(new Gomme(this, this.gommeLayer.objects[0].x * 4, this.gommeLayer.objects[0].y * 4));
+    this.gommes.push(new Gomme(this, this.gommeLayer.objects[1].x * 4, this.gommeLayer.objects[1].y * 4));
+    this.gommes.push(new Gomme(this, this.gommeLayer.objects[2].x * 4, this.gommeLayer.objects[2].y * 4));
+
 
     GameManager.PowerUps.addMultiple(this.superGommes);
     GameManager.PowerUps.addMultiple(this.gommes);
 
-    console.log(this.mapLayer.culledTiles.length);
 
+    //console.log(GameManager.PowerUps);
+    //console.log(GameManager.PowerUps.getLength());
     // const debugGraphics = this.add.graphics().setAlpha(0.75);
     // this.mapLayer.renderDebug(debugGraphics, {
     //   tileColor: null, // Color of non-colliding tiles
