@@ -7,7 +7,7 @@ export default class Gomme extends Phaser.Physics.Arcade.Sprite {
 
     this.currentScene = currentScene;
     this.currentScene.physics.add.existing(this);
-    this.scale = 4;
+    // this.scale = 4;
     this.setDepth(2);
     this.currentScene.add.existing(this);
   }

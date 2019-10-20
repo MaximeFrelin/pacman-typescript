@@ -7,7 +7,7 @@ export default class SuperGomme extends Phaser.Physics.Arcade.Sprite {
     super(currentScene, x, y, "super-gomme");
     this.currentScene = currentScene;
     this.currentScene.physics.add.existing(this);
-    this.scale = 4;
+    // this.scale = 4;
     this.setDepth(2);
     this.currentScene.add.existing(this);
   }

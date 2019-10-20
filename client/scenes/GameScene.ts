@@ -46,16 +46,13 @@ export default class Game extends Phaser.Scene {
 
   //Appelé à chaque frame disponible
   public update() {
-    if (GameManager.PowerUps.getLength() == 0) {
-      displayWin();
-    }
-    // this.mapLayer.removeTileAtWorldXY(this.pacman.x, this.pacman.y);
-    // this.mapLayer.removeTileAt(this.pacman.x, this.pacman.y);
+    // if (GameManager.PowerUps.getLength() == 0) {
+    //   displayWin();
+    // }
   }
 
   private createGroups() {
     GameManager.PowerUps = this.physics.add.group();
-    GameManager.Walls = this.physics.add.group();
   }
 
   /**
@@ -94,40 +91,36 @@ export default class Game extends Phaser.Scene {
     this.mapLayer.setCollisionByProperty({ Collide: true });
     // this.objectLayer.setCollisionByProperty({ Collide: true });
 
-    this.mapLayer.scale = 4;
+    // this.mapLayer.scale = 4;
+
+    const debugGraphics = this.add.graphics().setAlpha(0.75);
+    this.mapLayer.renderDebug(debugGraphics, {
+      tileColor: null, // Color of non-colliding tiles
+      collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+      faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+    });
 
     this.mapLayer.setDepth(1);
     // this.objectLayer.setDepth(1);
 
-    // GameManager.Walls.add(mapLayer);
     this.physics.add.collider(this.pacman, this.mapLayer);
 
-    /*this.superGommeLayer.objects.forEach(superGomme => {
-      this.superGommes.push(
-        new SuperGomme(this, superGomme.x * 4, superGomme.y * 4)
-      );
-    });*/
+    // this.superGommeLayer.objects.forEach(superGomme => {
+    //   this.superGommes.push(
+    //     new SuperGomme(this, superGomme.x * 4, superGomme.y * 4)
+    //   );
+    // });
 
-    /*this.gommeLayer.objects.forEach(gomme => {
-      this.gommes.push(new Gomme(this, gomme.x * 4, gomme.y * 4));
+    // this.gommeLayer.objects.forEach(gomme => {
+    //   this.gommes.push(new Gomme(this, gomme.x * 4, gomme.y * 4));
 
-    });*/
-    this.gommes.push(new Gomme(this, this.gommeLayer.objects[0].x * 4, this.gommeLayer.objects[0].y * 4));
-    this.gommes.push(new Gomme(this, this.gommeLayer.objects[1].x * 4, this.gommeLayer.objects[1].y * 4));
-    this.gommes.push(new Gomme(this, this.gommeLayer.objects[2].x * 4, this.gommeLayer.objects[2].y * 4));
+    // });
 
+    console.log(this.mapLayer);
+    console.log(this.pacman);
 
+    GameManager.MapLayer = this.mapLayer;
     GameManager.PowerUps.addMultiple(this.superGommes);
     GameManager.PowerUps.addMultiple(this.gommes);
-
-
-    //console.log(GameManager.PowerUps);
-    //console.log(GameManager.PowerUps.getLength());
-    // const debugGraphics = this.add.graphics().setAlpha(0.75);
-    // this.mapLayer.renderDebug(debugGraphics, {
-    //   tileColor: null, // Color of non-colliding tiles
-    //   collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    //   faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    // });
   }
 }

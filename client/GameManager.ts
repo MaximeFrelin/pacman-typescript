@@ -7,6 +7,6 @@ export default class GameManager {
   public static Player: Phaser.GameObjects.GameObject;
   public static Ennemies: Phaser.Physics.Arcade.Group;
   public static PowerUps: Phaser.Physics.Arcade.Group;
-  public static Walls: Phaser.Physics.Arcade.Group;
+  public static MapLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public static Score: number = 0;
 }

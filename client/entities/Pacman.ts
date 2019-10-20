@@ -14,13 +14,15 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   IsWraping: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 210, 180, "pac-man-right-1");
+    super(currentScene, 12, 12, "pac-man-right-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
     this.currentScene.physics.add.existing(this, false);
     // this.setCollideWorldBounds(true);
-    this.scale = 3.5;
+    // this.scale = 4;
+    this.body.setSize(15.5, 15.5, false);
+    // this.body.offset();
     this.play("walk-right");
     this.initEvent();
   }
@@ -40,20 +42,92 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
 
   //Change la position de pacman
   public move(): void {
+    if (this.canTurn()) {
+      switch (this.currentKey) {
+        case KeyCode.LEFT:
+          this.play("walk-left");
+          this.setVelocity(Configuration.PlayerSpeed * -20, 0);
+          break;
+        case KeyCode.UP:
+          this.play("walk-top");
+          this.setVelocity(0, Configuration.PlayerSpeed * -20);
+          break;
+        case KeyCode.RIGHT:
+          this.play("walk-right");
+          this.setVelocity(Configuration.PlayerSpeed * 20, 0);
+          break;
+        case KeyCode.DOWN:
+          this.play("walk-bottom");
+          this.setVelocity(0, Configuration.PlayerSpeed * 20);
+          break;
+      }
+    }
+  }
+
+  private canTurn(): boolean {
+    let x = this.x;
+    let y = this.y;
+    let width = 0;
+    let height = 0;
+    let tiles = [];
+
+    //On change
     switch (this.currentKey) {
       case KeyCode.LEFT:
-        this.setVelocity(Configuration.PlayerSpeed * -100, 0);
+        x += -4;
+        height = 8;
+        width = 8;
         break;
       case KeyCode.UP:
-        this.setVelocity(0, Configuration.PlayerSpeed * -100);
+        y += -4;
+        height = 8;
+        width = 8;
         break;
       case KeyCode.RIGHT:
-        this.setVelocity(Configuration.PlayerSpeed * 100, 0);
+        x += 4;
+        height = 8;
+        width = 8;
         break;
       case KeyCode.DOWN:
-        this.setVelocity(0, Configuration.PlayerSpeed * 100);
+        y += 4;
+        height = 8;
+        width = 8;
         break;
     }
+
+    let rectangle = this.currentScene.add.rectangle(
+      x,
+      y,
+      width,
+      height,
+      0xffffff
+    );
+    // rectangle.setDepth(81);
+
+    //Récupération des tiles
+
+    tiles = GameManager.MapLayer.getTilesWithinWorldXY(x, y, width, height, {
+      isColliding: true
+    });
+
+    console.log(tiles);
+
+    //On vérifie s'il ne peut pas tourner
+
+    for (let i = 0; i < tiles.length; i++) {
+      let tile: any = tiles[i];
+      let rectangle = this.currentScene.add.rectangle(
+        tile.x * 4,
+        tile.y * 4,
+        4,
+        4,
+        0xffffff
+      );
+      rectangle.setDepth(81);
+      return false;
+    }
+
+    return true;
   }
 
   //Change la direction
@@ -65,19 +139,15 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   private initEvent(): void {
     keys.keyLeft.on("down", evt => {
       this.changeDirection(KeyCode.LEFT);
-      this.play("walk-left");
     });
     keys.keyRight.on("down", evt => {
       this.changeDirection(KeyCode.RIGHT);
-      this.play("walk-right");
     });
     keys.keyUp.on("down", evt => {
       this.changeDirection(KeyCode.UP);
-      this.play("walk-top");
     });
     keys.keyDown.on("down", evt => {
       this.changeDirection(KeyCode.DOWN);
-      this.play("walk-bottom");
     });
   }
 
@@ -90,7 +160,6 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
       this.eatSuperGomme(object2);
     }
-    console.log(GameManager.Score);
   }
 
   /**
@@ -99,9 +168,9 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   private eatSuperGomme(superGomme: SuperGomme | Gomme) {
     GameManager.PowerUps.remove(superGomme);
     superGomme.destroy();
-    if(superGomme instanceof SuperGomme) {
+    if (superGomme instanceof SuperGomme) {
       GameManager.Score += 1000;
-    }else {
+    } else {
       GameManager.Score += 200;
     }
     //Lancé les events des fantomes pour pouvoir les manger

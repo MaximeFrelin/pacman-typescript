@@ -35,7 +35,7 @@ const config: any = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
   },
   scene: [LoadScene]
@@ -53,7 +53,7 @@ window.onload = () => {
   game.scene.add("Menu", Menu);
   game.scene.add("Score", Score);
   game.scene.add("Game", Game);
-  game.scene.add("Win",Win);
+  game.scene.add("Win", Win);
 };
 
 export function getScenes(): Phaser.Scene[] {
@@ -82,13 +82,13 @@ export function hideMenu() {
   game.scene.wake("Game");
 }
 
-export function displayWin(){
+export function displayWin() {
   game.scene.remove("Game");
   game.scene.remove("LoadScene");
   game.scene.start("Win");
 }
 
-export function displayGame(){
+export function displayGame() {
   game.scene.stop("Win");
   console.log(game.scene);
   game.scene.add("Game", Game);
