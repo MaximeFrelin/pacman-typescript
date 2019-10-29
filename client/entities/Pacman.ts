@@ -75,56 +75,50 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     switch (this.currentKey) {
       case KeyCode.LEFT:
         x += -4;
-        height = 8;
-        width = 8;
         break;
       case KeyCode.UP:
         y += -4;
-        height = 8;
-        width = 8;
         break;
       case KeyCode.RIGHT:
         x += 4;
-        height = 8;
-        width = 8;
         break;
       case KeyCode.DOWN:
         y += 4;
-        height = 8;
-        width = 8;
         break;
     }
 
     let rectangle = this.currentScene.add.rectangle(
       x,
       y,
-      width,
-      height,
+      14,
+      14,
       0xffffff
     );
     // rectangle.setDepth(81);
 
     //Récupération des tiles
 
-    tiles = GameManager.MapLayer.getTilesWithinWorldXY(x, y, width, height, {
+    tiles = GameManager.MapLayer.getTilesWithinWorldXY(x, y + 4, 16, 4, {
       isColliding: true
     });
 
     console.log(tiles);
+    console.log(this.x);
+    console.log(this.y);
 
     //On vérifie s'il ne peut pas tourner
 
     for (let i = 0; i < tiles.length; i++) {
       let tile: any = tiles[i];
       let rectangle = this.currentScene.add.rectangle(
-        tile.x * 4,
-        tile.y * 4,
+        tile.pixelX,
+        tile.pixelY,
         4,
         4,
         0xffffff
       );
-      rectangle.setDepth(81);
-      return false;
+      // rectangle.setDepth(81);
+      return true;
     }
 
     return true;
