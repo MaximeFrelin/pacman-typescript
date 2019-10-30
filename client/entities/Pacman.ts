@@ -10,7 +10,8 @@ import Gomme from "./Gomme";
  */
 export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   currentScene: Phaser.Scene;
-  currentKey: KeyCode;
+  currentKey: KeyCode = null;
+  nextKey: KeyCode = null;
   IsWraping: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
@@ -20,8 +21,9 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     this.currentScene.add.existing(this);
     this.currentScene.physics.add.existing(this, false);
     // this.setCollideWorldBounds(true);
-    // this.scale = 4;
-    this.body.setSize(14, 14, false);
+    this.scale = 0.95;
+    this.body.setSize(8, 8, false);
+    this.body.setOffset(4, 4);
     // this.body.offset();
     this.play("walk-right");
     this.initEvent();
@@ -42,99 +44,105 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
 
   //Change la position de pacman
   public move(): void {
-    if (this.canTurn()) {
+    let actionAvailable: ActionCode = this.canTurn();
+    if (actionAvailable === ActionCode.TURN) {
+      this.currentKey = this.nextKey;
       switch (this.currentKey) {
         case KeyCode.LEFT:
-          this.play("walk-left");
+          if (this.anims.getCurrentKey() !== "walk-left")
+            this.play("walk-left");
           this.setVelocity(Configuration.PlayerSpeed * -20, 0);
           break;
         case KeyCode.UP:
-          this.play("walk-top");
+          if (this.anims.getCurrentKey() !== "walk-top") this.play("walk-top");
           this.setVelocity(0, Configuration.PlayerSpeed * -20);
           break;
         case KeyCode.RIGHT:
-          this.play("walk-right");
+          if (this.anims.getCurrentKey() !== "walk-right")
+            this.play("walk-right");
           this.setVelocity(Configuration.PlayerSpeed * 20, 0);
           break;
         case KeyCode.DOWN:
-          this.play("walk-bottom");
+          if (this.anims.getCurrentKey() !== "walk-bottom")
+            this.play("walk-bottom");
           this.setVelocity(0, Configuration.PlayerSpeed * 20);
           break;
       }
+    } else if (actionAvailable === ActionCode.STOP) {
+      this.setVelocity(0, Configuration.PlayerSpeed * 0);
     }
   }
 
-  private canTurn(): boolean {
+  private canTurn(): ActionCode {
     let x = this.x;
     let y = this.y;
-    let width = 0;
-    let height = 0;
     let tiles = [];
 
     //On change
-    switch (this.currentKey) {
+    switch (this.nextKey) {
       case KeyCode.LEFT:
-        x += -4;
+        if (this.currentKey == this.nextKey) x += -3;
+        else x += -4;
         break;
       case KeyCode.UP:
-        y += -4;
+        if (this.currentKey == this.nextKey) y += -3;
+        else y += -4;
         break;
       case KeyCode.RIGHT:
-        x += 4;
+        if (this.currentKey == this.nextKey) x += 3;
+        else x += 4;
         break;
       case KeyCode.DOWN:
-        y += 4;
+        if (this.currentKey == this.nextKey) y += 3;
+        else y += 4;
         break;
     }
 
-    let rectangle = this.currentScene.add.rectangle(
-      x,
-      y,
-      14,
-      14,
-      0x00FF00
-    );
-    // rectangle.setDepth(81);
-    rectangle.setAlpha(0, 0, 0, 0);
-
     //Récupération des tiles
-    GameManager.MapLayer.forEachTile((tile) => {
-      // let tile: any = tiles[i];
-      if (!tile)
-        return;
-      let rectangle = this.currentScene.add.rectangle(
-        tile.pixelX,
-        tile.pixelY,
-        4,
-        4,
-        0xFF0000
-      );
-      rectangle.setDepth(81);
-      // console.log(i);
-    }, this, Math.round((x - 8) / 4), Math.round((y - 8) / 4), 4, 4, { isColliding: true });
+    // GameManager.MapLayer.forEachTile(
+    //   tile => {
+    //     if (!tile) return;
+    //     let rectangle = this.currentScene.add.rectangle(
+    //       tile.pixelX,
+    //       tile.pixelY,
+    //       4,
+    //       4,
+    //       0xff0000
+    //     );
+    //     rectangle.setDepth(81);
+    //   },
+    //   this,
+    //   Math.ceil((x - 8) / 4),
+    //   Math.ceil((y - 8) / 4),
+    //   4,
+    //   4,
+    //   { isColliding: true }
+    // );
 
-    //On vérifie s'il ne peut pas tourner
-    console.log(tiles);
-    // for (let i = 0; i < tiles.length; i++) {
-    //   let tile: any = tiles[i];
-    //   let rectangle = this.currentScene.add.rectangle(
-    //     tile.pixelX,
-    //     tile.pixelY,
-    //     4,
-    //     4,
-    //     0xFF0000d
-    //   );
-    //   rectangle.setDepth(81);
-    //   console.log(i);
-    //   return true;
-    // }
+    tiles = GameManager.MapLayer.getTilesWithin(
+      Math.ceil((x - 8) / 4),
+      Math.ceil((y - 8) / 4),
+      4,
+      4,
+      { isColliding: true }
+    );
 
-    return true;
+    if (tiles.length > 0) {
+      //Si je n'ai pas changé de direction et que je rencontre un mur
+      if (this.currentKey === this.nextKey) return ActionCode.STOP;
+
+      //Si je veux tourner et qu'il y a un mur
+      return ActionCode.CONTINUE;
+    }
+
+    //Si je veux tourner et que je peux
+    return ActionCode.TURN;
   }
 
   //Change la direction
   private changeDirection(keyCode: KeyCode): void {
-    this.currentKey = keyCode;
+    this.nextKey = keyCode;
+    if (this.currentKey === null) this.currentKey = keyCode;
   }
 
   //Initialise les events des boutons
@@ -184,4 +192,10 @@ enum KeyCode {
   DOWN,
   RIGHT,
   LEFT
+}
+
+enum ActionCode {
+  TURN,
+  CONTINUE,
+  STOP
 }

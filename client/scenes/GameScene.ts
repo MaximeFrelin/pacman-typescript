@@ -103,35 +103,28 @@ export default class Game extends Phaser.Scene {
 
     this.mapLayer.setDepth(1);
 
-    this.mapLayer.forEachTile((tile) => {
-      let rectangle = this.add.rectangle(
-        tile.pixelX,
-        tile.pixelY,
-        4,
-        4,
-        0xffffff
-      );
-      rectangle.setDepth(81);
-    }, this, 0, 0, 1000, 1000, {
-      isColliding: true
-    })
-    // this.objectLayer.setDepth(1);
+    // this.mapLayer.forEachTile((tile) => {
+    //   let rectangle = this.add.rectangle(
+    //     tile.pixelX,
+    //     tile.pixelY,
+    //     4,
+    //     4,
+    //     0xffffff
+    //   );
+    //   rectangle.setDepth(81);
+    // }, this, 0, 0, 1000, 1000, {
+    //   isColliding: true
+    // })
 
     this.physics.add.collider(this.pacman, this.mapLayer);
 
-    // this.superGommeLayer.objects.forEach(superGomme => {
-    //   this.superGommes.push(
-    //     new SuperGomme(this, superGomme.x * 4, superGomme.y * 4)
-    //   );
-    // });
+    this.superGommeLayer.objects.forEach(superGomme => {
+      this.superGommes.push(new SuperGomme(this, superGomme.x, superGomme.y));
+    });
 
-    // this.gommeLayer.objects.forEach(gomme => {
-    //   this.gommes.push(new Gomme(this, gomme.x * 4, gomme.y * 4));
-
-    // });
-
-    console.log(this.mapLayer);
-    console.log(this.pacman);
+    this.gommeLayer.objects.forEach(gomme => {
+      this.gommes.push(new Gomme(this, gomme.x, gomme.y));
+    });
 
     GameManager.MapLayer = this.mapLayer;
     GameManager.PowerUps.addMultiple(this.superGommes);
