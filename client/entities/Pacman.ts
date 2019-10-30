@@ -14,14 +14,14 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   IsWraping: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 12, 12, "pac-man-right-1");
+    super(currentScene, 10, 10, "pac-man-right-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
     this.currentScene.physics.add.existing(this, false);
     // this.setCollideWorldBounds(true);
     // this.scale = 4;
-    this.body.setSize(15.5, 15.5, false);
+    this.body.setSize(14, 14, false);
     // this.body.offset();
     this.play("walk-right");
     this.initEvent();
@@ -92,34 +92,42 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
       y,
       14,
       14,
-      0xffffff
+      0x00FF00
     );
     // rectangle.setDepth(81);
+    rectangle.setAlpha(0, 0, 0, 0);
 
     //Récupération des tiles
-
-    tiles = GameManager.MapLayer.getTilesWithinWorldXY(x, y + 4, 16, 4, {
-      isColliding: true
-    });
-
-    console.log(tiles);
-    console.log(this.x);
-    console.log(this.y);
-
-    //On vérifie s'il ne peut pas tourner
-
-    for (let i = 0; i < tiles.length; i++) {
-      let tile: any = tiles[i];
+    GameManager.MapLayer.forEachTile((tile) => {
+      // let tile: any = tiles[i];
+      if (!tile)
+        return;
       let rectangle = this.currentScene.add.rectangle(
         tile.pixelX,
         tile.pixelY,
         4,
         4,
-        0xffffff
+        0xFF0000
       );
-      // rectangle.setDepth(81);
-      return true;
-    }
+      rectangle.setDepth(81);
+      // console.log(i);
+    }, this, Math.round((x - 8) / 4), Math.round((y - 8) / 4), 4, 4, { isColliding: true });
+
+    //On vérifie s'il ne peut pas tourner
+    console.log(tiles);
+    // for (let i = 0; i < tiles.length; i++) {
+    //   let tile: any = tiles[i];
+    //   let rectangle = this.currentScene.add.rectangle(
+    //     tile.pixelX,
+    //     tile.pixelY,
+    //     4,
+    //     4,
+    //     0xFF0000d
+    //   );
+    //   rectangle.setDepth(81);
+    //   console.log(i);
+    //   return true;
+    // }
 
     return true;
   }

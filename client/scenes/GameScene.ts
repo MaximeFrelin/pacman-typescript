@@ -14,7 +14,7 @@ export default class Game extends Phaser.Scene {
   private superGommes: SuperGomme[] = [];
   private gommes: Gomme[] = [];
   private walls: HorizontalWall[] = [];
-  private mapLayer: Phaser.Tilemaps.StaticTilemapLayer = null;
+  private mapLayer: Phaser.Tilemaps.DynamicTilemapLayer = null;
   private superGommeLayer: Phaser.Tilemaps.ObjectLayer = null;
   private gommeLayer: Phaser.Tilemaps.ObjectLayer = null;
 
@@ -83,8 +83,9 @@ export default class Game extends Phaser.Scene {
    */
   private createMap(): void {
     const map = this.make.tilemap({ key: "map" });
+    map.setBaseTileSize(4, 4);
     const tileset = map.addTilesetImage("map", "tiles", 4, 4, 0, 0);
-    this.mapLayer = map.createStaticLayer("map", tileset, -2, -2);
+    this.mapLayer = map.createDynamicLayer("map", tileset, -2, -2);
     this.superGommeLayer = map.objects[0];
     this.gommeLayer = map.objects[1];
 
@@ -103,15 +104,14 @@ export default class Game extends Phaser.Scene {
     this.mapLayer.setDepth(1);
 
     this.mapLayer.forEachTile((tile) => {
-      console.log("coucou");
-      let rectagle = this.add.rectangle(
+      let rectangle = this.add.rectangle(
         tile.pixelX,
         tile.pixelY,
         4,
         4,
         0xffffff
       );
-      rectagle.setDepth(81);
+      rectangle.setDepth(81);
     }, this, 0, 0, 1000, 1000, {
       isColliding: true
     })
