@@ -70,66 +70,45 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
       }
     } else if (actionAvailable === ActionCode.STOP) {
       this.setVelocity(0, Configuration.PlayerSpeed * 0);
+      this.anims.stop();
     }
   }
 
   private canTurn(): ActionCode {
-    let x = this.x;
-    let y = this.y;
-    let tiles = [];
+    // let x = this.x;
+    // let y = this.y;
+    let canContinue: boolean = null;
+    let canGoNext: boolean = null;
 
-    //On change
-    switch (this.nextKey) {
-      case KeyCode.LEFT:
-        if (this.currentKey == this.nextKey) x += -3;
-        else x += -4;
-        break;
-      case KeyCode.UP:
-        if (this.currentKey == this.nextKey) y += -3;
-        else y += -4;
-        break;
-      case KeyCode.RIGHT:
-        if (this.currentKey == this.nextKey) x += 3;
-        else x += 4;
-        break;
-      case KeyCode.DOWN:
-        if (this.currentKey == this.nextKey) y += 3;
-        else y += 4;
-        break;
-    }
+    let isSameDirection: boolean = this.currentKey === this.nextKey;
 
-    //Récupération des tiles
-    // GameManager.MapLayer.forEachTile(
-    //   tile => {
-    //     if (!tile) return;
-    //     let rectangle = this.currentScene.add.rectangle(
-    //       tile.pixelX,
-    //       tile.pixelY,
-    //       4,
-    //       4,
-    //       0xff0000
-    //     );
-    //     rectangle.setDepth(81);
-    //   },
-    //   this,
-    //   Math.ceil((x - 8) / 4),
-    //   Math.ceil((y - 8) / 4),
-    //   4,
-    //   4,
-    //   { isColliding: true }
-    // );
+    let currentXY = this.getNextPosition(this.currentKey, false);
+    let nextXY = this.getNextPosition(this.nextKey, isSameDirection);
 
-    tiles = GameManager.MapLayer.getTilesWithin(
-      Math.ceil((x - 8) / 4),
-      Math.ceil((y - 8) / 4),
+    //On check les collisions dans la direction ou on veut aller
+    canGoNext = GameManager.MapLayer.getTilesWithin(
+      Math.ceil((nextXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
+      Math.ceil((nextXY.y - 8) / 4),
       4,
       4,
       { isColliding: true }
-    );
+    ).length == 0;
 
-    if (tiles.length > 0) {
+    //On check les collisions sur la route courante
+    canContinue = GameManager.MapLayer.getTilesWithin(
+      Math.ceil((currentXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
+      Math.ceil((currentXY.y - 8) / 4),
+      4,
+      4,
+      { isColliding: true }
+    ).length == 0;
+
+    if (!canGoNext) {
       //Si je n'ai pas changé de direction et que je rencontre un mur
-      if (this.currentKey === this.nextKey) return ActionCode.STOP;
+      if (isSameDirection) return ActionCode.STOP;
+
+      //Si je peux pas tourner ou je veux aller et si je peux pas continuer, je m'arrête
+      if (!canContinue) return ActionCode.STOP;
 
       //Si je veux tourner et qu'il y a un mur
       return ActionCode.CONTINUE;
@@ -137,6 +116,37 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
 
     //Si je veux tourner et que je peux
     return ActionCode.TURN;
+  }
+
+  /**
+   * Retourne un objet { x, y } de la direction voulu
+   * @param direction - Direction desirée
+   * @param isSameDirection - True si la direction voulue et l'actuelle sont identiques (Si on a pas changé de direction)
+   */
+  private getNextPosition(direction: KeyCode, isSameDirection: boolean): any {
+    let x = this.x;
+    let y = this.y;
+
+    switch (direction) {
+      case KeyCode.LEFT:
+        if (isSameDirection) x += -3;
+        else x += -4;
+        break;
+      case KeyCode.UP:
+        if (isSameDirection) y += -3;
+        else y += -4;
+        break;
+      case KeyCode.RIGHT:
+        if (isSameDirection) x += 3;
+        else x += 4;
+        break;
+      case KeyCode.DOWN:
+        if (isSameDirection) y += 3;
+        else y += 4;
+        break;
+    }
+
+    return { x, y }
   }
 
   //Change la direction

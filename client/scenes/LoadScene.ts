@@ -1,5 +1,7 @@
 import * as Phaser from "phaser";
 export default class LoadScene extends Phaser.Scene {
+  private readonly PACMAN_FRAMERATE = 25;
+
   constructor(currentScene: Phaser.Scene) {
     super("LoadScene");
   }
@@ -179,7 +181,7 @@ export default class LoadScene extends Phaser.Scene {
         { key: "pac-man-right-1", frame: "" },
         { key: "pac-man-right-2", frame: "" }
       ],
-      frameRate: 20,
+      frameRate: this.PACMAN_FRAMERATE,
       repeat: -1
     });
     this.anims.create({
@@ -188,7 +190,7 @@ export default class LoadScene extends Phaser.Scene {
         { key: "pac-man-left-1", frame: "" },
         { key: "pac-man-left-2", frame: "" }
       ],
-      frameRate: 20,
+      frameRate: this.PACMAN_FRAMERATE,
       repeat: -1
     });
     this.anims.create({
@@ -197,7 +199,7 @@ export default class LoadScene extends Phaser.Scene {
         { key: "pac-man-top-1", frame: "" },
         { key: "pac-man-top-2", frame: "" }
       ],
-      frameRate: 20,
+      frameRate: this.PACMAN_FRAMERATE,
       repeat: -1
     });
     this.anims.create({
@@ -206,7 +208,7 @@ export default class LoadScene extends Phaser.Scene {
         { key: "pac-man-bottom-1", frame: "" },
         { key: "pac-man-bottom-2", frame: "" }
       ],
-      frameRate: 20,
+      frameRate: this.PACMAN_FRAMERATE,
       repeat: -1
     });
   }
