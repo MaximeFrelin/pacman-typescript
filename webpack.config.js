@@ -52,6 +52,9 @@ module.exports = {
       {
         from: path.resolve(__dirname, "client/assets"),
         to: path.resolve(__dirname, "public/assets")
+      }, {
+        from: path.resolve(__dirname, "client/music"),
+        to: path.resolve(__dirname, "public/music")
       }
     ])
   ]

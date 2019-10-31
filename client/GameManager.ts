@@ -9,4 +9,5 @@ export default class GameManager {
   public static PowerUps: Phaser.Physics.Arcade.Group;
   public static MapLayer: Phaser.Tilemaps.DynamicTilemapLayer;
   public static Score: number = 0;
+  public static BeginMusic: Phaser.Sound.BaseSound;
 }

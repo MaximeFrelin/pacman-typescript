@@ -13,6 +13,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   currentKey: KeyCode = null;
   nextKey: KeyCode = null;
   IsWraping: boolean = false;
+  CanBegin: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 10, 10, "pac-man-right-1");
@@ -27,10 +28,14 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     // this.body.offset();
     this.play("walk-right");
     this.initEvent();
+
   }
 
   //Appelé à chaque frame disponible
   preUpdate() {
+    if (!this.CanBegin)
+      return;
+
     this.anims.update(1, 9);
     this.currentScene.physics.overlap(
       this,
@@ -174,6 +179,10 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     });
     keys.keyDown.on("down", evt => {
       this.changeDirection(KeyCode.DOWN);
+    });
+
+    GameManager.BeginMusic.once('complete', (music) => {
+      this.CanBegin = true;
     });
   }
 

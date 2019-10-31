@@ -37,6 +37,8 @@ export default class Game extends Phaser.Scene {
    */
   public create() {
     configureKeyboardForScene(this);
+    GameManager.BeginMusic = this.sound.add("begin");
+
     this.createGroups();
     this.initEvent();
 
@@ -50,6 +52,8 @@ export default class Game extends Phaser.Scene {
 
     //Activation des collisions sur les bords de l'écran
     this.physics.world.setBoundsCollision();
+
+    GameManager.BeginMusic.play();
   }
 
   //Appelé à chaque frame disponible

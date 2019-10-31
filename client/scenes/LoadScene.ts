@@ -1,4 +1,7 @@
 import * as Phaser from "phaser";
+import GameManager from "../GameManager";
+
+
 export default class LoadScene extends Phaser.Scene {
   private readonly PACMAN_FRAMERATE = 25;
   private readonly CLYDE_FRAMERATE = 35;
@@ -15,6 +18,7 @@ export default class LoadScene extends Phaser.Scene {
     this.loadObject();
     this.loadGhost();
     this.loadMap();
+    this.loadMusic();
   }
 
   create() {
@@ -24,6 +28,8 @@ export default class LoadScene extends Phaser.Scene {
     this.createInkyAnimation();
     this.createPinkyAnimation();
     this.createGhostAnimationForScore();
+
+    //On lance la partie lorsque toutes les musiques sont chargées en mémoire
     this.game.scene.start("Game");
   }
 
@@ -422,5 +428,9 @@ export default class LoadScene extends Phaser.Scene {
       frameRate: 4,
       repeat: -1
     });
+  }
+
+  public loadMusic(): void {
+    this.load.audio("begin", "music/pacman_beginning.wav");
   }
 }
