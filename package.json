@@ -5,8 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "start:client": "webpack-dev-server --config webpack.config.js",
-    "start-build": "npm run ts && babel-watch ./dist/serveur/index.js",
-    "start": "babel-watch ./dist/serveur/index.js",
+    "start-build": "npm run ts && babel-watch serveur/index.ts",
+    "start": "babel-watch serveur/index.ts",
     "ts": "tsc"
   },
   "author": "",

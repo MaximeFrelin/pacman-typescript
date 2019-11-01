@@ -1,6 +1,10 @@
 import * as keys from "../config/KeyboardSettings";
 import { configureKeyboardForScene } from "../config/KeyboardSettings";
 import Pacman from "../entities/Pacman";
+import Blinky from "../entities/Blinky";
+import Clyde from "../entities/Clyde";
+import Inky from "../entities/Inky";
+import Pinky from "../entities/Pinky";
 import { displayMenu, displayWin } from "./../index";
 import SuperGomme from "./../entities/SuperGomme";
 import GameManager from "../GameManager";
@@ -11,6 +15,10 @@ import Gomme from "../entities/Gomme";
 
 export default class Game extends Phaser.Scene {
   private pacman: Pacman = null;
+  private blinky: Blinky = null;
+  private clyde: Clyde = null;
+  private inky: Inky = null;
+  private pinky: Pinky = null;
   private superGommes: SuperGomme[] = [];
   private gommes: Gomme[] = [];
   private walls: HorizontalWall[] = [];
@@ -74,8 +82,16 @@ export default class Game extends Phaser.Scene {
    */
   private initGameObjects(): void {
     this.pacman = new Pacman(this);
+    this.blinky = new Blinky(this);
+    this.clyde = new Clyde(this);
+    this.inky = new Inky(this);
+    this.pinky = new Pinky(this);
 
     GameManager.Player = this.pacman;
+    // GameManager.Ennemies.add(this.blinky);
+    // GameManager.Ennemies.add(this.clyde);
+    // GameManager.Ennemies.add(this.inky);
+    // GameManager.Ennemies.add(this.pinky);
   }
 
   /**

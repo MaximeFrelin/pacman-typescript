@@ -5,7 +5,7 @@ const multipart = multer();
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const config = require("../../webpack.config.js");
+const config = require("../webpack.config.js");
 var cors = require("cors");
 
 //import con from "./bdd/MySqlConnect";
