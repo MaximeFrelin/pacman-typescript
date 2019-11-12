@@ -1,6 +1,10 @@
 import * as Phaser from "phaser";
 export default class LoadScene extends Phaser.Scene {
   private readonly PACMAN_FRAMERATE = 25;
+  private readonly CLYDE_FRAMERATE = 35;
+  private readonly BLINKY_FRAMERATE = 45;
+  private readonly INKY_FRAMERATE = 55;
+  private readonly PINKY_FRAMERATE = 65;
 
   constructor(currentScene: Phaser.Scene) {
     super("LoadScene");
@@ -15,6 +19,10 @@ export default class LoadScene extends Phaser.Scene {
 
   create() {
     this.createPacmanAnimation();
+    this.createClydeAnimation();
+    this.createBlinkyAnimation();
+    this.createInkyAnimation();
+    this.createPinkyAnimation();
     this.createGhostAnimationForScore();
     this.game.scene.start("Game");
   }
@@ -209,6 +217,162 @@ export default class LoadScene extends Phaser.Scene {
         { key: "pac-man-bottom-2", frame: "" }
       ],
       frameRate: this.PACMAN_FRAMERATE,
+      repeat: -1
+    });
+  }
+
+  public createClydeAnimation() {
+    this.anims.create({
+      key: "clyde-walk-right",
+      frames: [
+        { key: "ghost-brown-right-1", frame: "" },
+        { key: "ghost-brownn-right-2", frame: "" }
+      ],
+      frameRate: this.CLYDE_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "clyde-walk-left",
+      frames: [
+        { key: "ghost-brown-left-1", frame: "" },
+        { key: "ghost-brown-left-2", frame: "" }
+      ],
+      frameRate: this.CLYDE_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "clyde-walk-top",
+      frames: [
+        { key: "ghost-brown-top-1", frame: "" },
+        { key: "ghost-brown-top-2", frame: "" }
+      ],
+      frameRate: this.CLYDE_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "clyde-walk-bottom",
+      frames: [
+        { key: "ghost-brown-bottom-1", frame: "" },
+        { key: "ghost-brown-bottom-2", frame: "" }
+      ],
+      frameRate: this.CLYDE_FRAMERATE,
+      repeat: -1
+    });
+  }
+
+  public createBlinkyAnimation() {
+    this.anims.create({
+      key: "blinky-walk-right",
+      frames: [
+        { key: "ghost-red-right-1", frame: "" },
+        { key: "ghost-red-right-2", frame: "" }
+      ],
+      frameRate: this.BLINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "blinky-walk-left",
+      frames: [
+        { key: "ghost-red-left-1", frame: "" },
+        { key: "ghost-red-left-2", frame: "" }
+      ],
+      frameRate: this.BLINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "blinky-walk-top",
+      frames: [
+        { key: "ghost-red-top-1", frame: "" },
+        { key: "ghost-red-top-2", frame: "" }
+      ],
+      frameRate: this.BLINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "blinky-walk-bottom",
+      frames: [
+        { key: "ghost-red-bottom-1", frame: "" },
+        { key: "ghost-red-bottom-2", frame: "" }
+      ],
+      frameRate: this.BLINKY_FRAMERATE,
+      repeat: -1
+    });
+  }
+
+  public createInkyAnimation() {
+    this.anims.create({
+      key: "inky-walk-right",
+      frames: [
+        { key: "ghost-cyan-right-1", frame: "" },
+        { key: "ghost-cyan-right-2", frame: "" }
+      ],
+      frameRate: this.INKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "inky-walk-left",
+      frames: [
+        { key: "ghost-cyan-left-1", frame: "" },
+        { key: "ghost-cyan-left-2", frame: "" }
+      ],
+      frameRate: this.INKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "inky-walk-top",
+      frames: [
+        { key: "ghost-cyan-top-1", frame: "" },
+        { key: "ghost-cyan-top-2", frame: "" }
+      ],
+      frameRate: this.INKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "inky-walk-bottom",
+      frames: [
+        { key: "ghost-cyan-bottom-1", frame: "" },
+        { key: "ghost-cyan-bottom-2", frame: "" }
+      ],
+      frameRate: this.INKY_FRAMERATE,
+      repeat: -1
+    });
+  }
+
+  public createPinkyAnimation() {
+    this.anims.create({
+      key: "pinky-walk-right",
+      frames: [
+        { key: "ghost-purple-right-1", frame: "" },
+        { key: "ghost-purple-right-2", frame: "" }
+      ],
+      frameRate: this.PINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "pinky-walk-left",
+      frames: [
+        { key: "ghost-purple-left-1", frame: "" },
+        { key: "ghost-purple-left-2", frame: "" }
+      ],
+      frameRate: this.PINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "pinky-walk-top",
+      frames: [
+        { key: "ghost-purple-top-1", frame: "" },
+        { key: "ghost-purple-top-2", frame: "" }
+      ],
+      frameRate: this.PINKY_FRAMERATE,
+      repeat: -1
+    });
+    this.anims.create({
+      key: "pinky-walk-bottom",
+      frames: [
+        { key: "ghost-purple-bottom-1", frame: "" },
+        { key: "ghost-purple-bottom-2", frame: "" }
+      ],
+      frameRate: this.PINKY_FRAMERATE,
       repeat: -1
     });
   }

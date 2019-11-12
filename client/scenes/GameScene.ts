@@ -54,9 +54,9 @@ export default class Game extends Phaser.Scene {
 
   //Appelé à chaque frame disponible
   public update() {
-    // if (GameManager.PowerUps.getLength() == 0) {
-    //   displayWin();
-    // }
+    if (GameManager.PowerUps.getLength() == 0) {
+      displayWin();
+    }
   }
 
   private createGroups() {

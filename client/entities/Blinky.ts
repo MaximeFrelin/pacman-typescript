@@ -13,6 +13,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   currentKey: KeyCode = null;
   nextKey: KeyCode = null;
   IsWraping: boolean = false;
+  hasToTurn: boolean = true;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 110, 90, "ghost-red-top-1");
@@ -26,7 +27,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(4, 4);
     // this.body.offset();
     this.play("ghost-red-stand-by");
-    // this.initEvent();
+    this.initMove();
   }
 
   //Appelé à chaque frame disponible
@@ -45,32 +46,48 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   //Change la position de pacman
   public move(): void {
     let actionAvailable: ActionCode = this.canTurn();
-    if (actionAvailable === ActionCode.TURN) {
+    if (actionAvailable === ActionCode.TURN && this.hasToTurn) {
       this.currentKey = this.nextKey;
       switch (this.currentKey) {
         case KeyCode.LEFT:
-          if (this.anims.getCurrentKey() !== "walk-left")
-            this.play("walk-left");
+          if (this.anims.getCurrentKey() !== "blinky-walk-left")
+            this.play("blinky-walk-left");
           this.setVelocity(Configuration.PlayerSpeed * -20, 0);
+          this.changeDirectionRandom();
+          this.hasToTurn=false;
+          setTimeout(() => this.hasToTurn=true, 250);
           break;
         case KeyCode.UP:
-          if (this.anims.getCurrentKey() !== "walk-top") this.play("walk-top");
+          if (this.anims.getCurrentKey() !== "blinky-walk-top") this.play("blinky-walk-top");
           this.setVelocity(0, Configuration.PlayerSpeed * -20);
+          this.changeDirectionRandom();
+          this.hasToTurn=false;
+          setTimeout(() => this.hasToTurn=true, 250);
           break;
         case KeyCode.RIGHT:
-          if (this.anims.getCurrentKey() !== "walk-right")
-            this.play("walk-right");
+          if (this.anims.getCurrentKey() !== "blinky-walk-right")
+            this.play("blinky-walk-right");
           this.setVelocity(Configuration.PlayerSpeed * 20, 0);
+          this.changeDirectionRandom();
+          this.hasToTurn=false;
+          setTimeout(() => this.hasToTurn=true, 250);
           break;
         case KeyCode.DOWN:
-          if (this.anims.getCurrentKey() !== "walk-bottom")
-            this.play("walk-bottom");
+          if (this.anims.getCurrentKey() !== "blinky-walk-bottom")
+            this.play("blinky-walk-bottom");
           this.setVelocity(0, Configuration.PlayerSpeed * 20);
+          this.changeDirectionRandom();
+          this.hasToTurn=false;
+          setTimeout(() => this.hasToTurn=true, 250);
           break;
       }
+
     } else if (actionAvailable === ActionCode.STOP) {
       this.setVelocity(0, Configuration.PlayerSpeed * 0);
       this.anims.stop();
+      this.changeDirectionRandom();
+      this.hasToTurn=false;
+      setTimeout(() => this.hasToTurn=true, 250);
     }
   }
 
@@ -155,20 +172,51 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
     if (this.currentKey === null) this.currentKey = keyCode;
   }
 
-  //Initialise les events des boutons
-  private initEvent(): void {
-    keys.keyLeft.on("down", evt => {
-      this.changeDirection(KeyCode.LEFT);
-    });
-    keys.keyRight.on("down", evt => {
+  //Change la direction aléatoirement
+  private changeDirectionRandom(): void {
+    switch(this.getRandomInt(4)){
+      case 0:
+        if(this.currentKey!=KeyCode.DOWN){
+          this.changeDirection(KeyCode.UP);
+        }
+        break;
+      case 1:
+        if(this.currentKey!=KeyCode.LEFT){
+          this.changeDirection(KeyCode.RIGHT);
+        }
+        break;
+      case 2:
+        if(this.currentKey!=KeyCode.UP){
+          this.changeDirection(KeyCode.DOWN);
+        }
+        break;
+      case 3:
+        if(this.currentKey!=KeyCode.RIGHT){
+          this.changeDirection(KeyCode.LEFT);
+        }
+        break;
+    }
+  }
+
+  // Génère un nombre aléatoire entre 0 et MAX
+  private getRandomInt(max): number {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  //Initialise le mouvement du fantome
+  private initMove(): void {
+    // keys.keyLeft.on("down", evt => {
+    //   this.changeDirection(KeyCode.LEFT);
+    // });
+    // keys.keyRight.on("down", evt => {
       this.changeDirection(KeyCode.RIGHT);
-    });
-    keys.keyUp.on("down", evt => {
-      this.changeDirection(KeyCode.UP);
-    });
-    keys.keyDown.on("down", evt => {
-      this.changeDirection(KeyCode.DOWN);
-    });
+    // });
+    // keys.keyUp.on("down", evt => {
+    //   this.changeDirection(KeyCode.UP);
+    // });
+    // keys.keyDown.on("down", evt => {
+    //   this.changeDirection(KeyCode.DOWN);
+    // });
   }
 
   /**
@@ -177,9 +225,9 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
    * @param object2 - Concerne la classe avec qui je suis entré en collision
    */
   private handleOverlap(object1, object2) {
-    if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
-      this.eatSuperGomme(object2);
-    }
+      // if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
+      //   this.eatSuperGomme(object2);
+      // }
   }
 
   /**
