@@ -45,7 +45,13 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   //Change la position de pacman
   public move(): void {
     let actionAvailable: ActionCode = this.canTurn();
-    if (actionAvailable === ActionCode.TURN) {
+    if(this.x < 0) {
+      this.x = 220;
+    }
+    else if(this.x > 220) {
+      this.x = 0;
+    }
+    else if (actionAvailable === ActionCode.TURN) {
       this.currentKey = this.nextKey;
       switch (this.currentKey) {
         case KeyCode.LEFT:

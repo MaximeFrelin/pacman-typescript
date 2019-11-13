@@ -14,6 +14,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   nextKey: KeyCode = null;
   IsWraping: boolean = false;
   hasToTurn: boolean = true;
+  cptBlock: number = 0;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 110, 90, "ghost-red-top-1");
@@ -46,7 +47,13 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   //Change la position de pacman
   public move(): void {
     let actionAvailable: ActionCode = this.canTurn();
-    if (actionAvailable === ActionCode.TURN && this.hasToTurn) {
+    if(this.x < 0) {
+      this.x = 220;
+    }
+    else if(this.x > 220) {
+      this.x = 0;
+    }
+    else if (actionAvailable === ActionCode.TURN && this.hasToTurn) {
       this.currentKey = this.nextKey;
       switch (this.currentKey) {
         case KeyCode.LEFT:
@@ -81,19 +88,28 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
           setTimeout(() => this.hasToTurn=true, 250);
           break;
       }
-
+      this.cptBlock=0;
     } else if (actionAvailable === ActionCode.STOP) {
       this.setVelocity(0, Configuration.PlayerSpeed * 0);
       this.anims.stop();
-      this.changeDirectionRandom();
-      this.hasToTurn=false;
-      setTimeout(() => this.hasToTurn=true, 250);
+      // Force le demi-tour
+      if(this.cptBlock>5){
+        this.turnBack();
+        this.cptBlock=0;
+        // this.x = 10;
+      } else {
+        this.cptBlock++;
+      }
+      // this.changeDirectionRandom();
+      // this.hasToTurn=false;
+      // setTimeout(() => this.hasToTurn=true, 250);
     }
   }
 
   private canTurn(): ActionCode {
     // let x = this.x;
     // let y = this.y;
+    if(this.cptBlock>5) return ActionCode.CONTINUE;
     let canContinue: boolean = null;
     let canGoNext: boolean = null;
 
@@ -113,7 +129,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
 
     //On check les collisions sur la route courante
     canContinue = GameManager.MapLayer.getTilesWithin(
-      Math.ceil((currentXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
+      Math.ceil((currentXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche du fantome
       Math.ceil((currentXY.y - 8) / 4),
       4,
       4,
@@ -194,6 +210,24 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
         if(this.currentKey!=KeyCode.RIGHT){
           this.changeDirection(KeyCode.LEFT);
         }
+        break;
+    }
+  }
+
+  //Faire demi-tour
+  private turnBack(): void {
+    switch(this.currentKey){
+      case KeyCode.DOW:
+        this.changeDirection(KeyCode.UP);
+        break;
+      case KeyCode.LEFT:
+        this.changeDirection(KeyCode.RIGHT);
+        break;
+      case KeyCode.UP:
+        this.changeDirection(KeyCode.DOWN);
+        break;
+      case KeyCode.RIGHT:
+        this.changeDirection(KeyCode.LEFT);
         break;
     }
   }
