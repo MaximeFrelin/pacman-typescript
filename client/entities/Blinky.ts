@@ -19,7 +19,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 110, 90, "ghost-red-top-1");
     this.currentScene = currentScene;
-    this.setDepth(2);
+    this.setDepth(100);
     this.currentScene.add.existing(this);
     this.currentScene.physics.add.existing(this, false);
     // this.setCollideWorldBounds(true);
@@ -62,14 +62,14 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
           this.setVelocity(Configuration.PlayerSpeed * -20, 0);
           this.changeDirectionRandom();
           this.hasToTurn=false;
-          setTimeout(() => this.hasToTurn=true, 250);
+          setTimeout(() => this.hasToTurn=true, 200);
           break;
         case KeyCode.UP:
           if (this.anims.getCurrentKey() !== "blinky-walk-top") this.play("blinky-walk-top");
           this.setVelocity(0, Configuration.PlayerSpeed * -20);
           this.changeDirectionRandom();
           this.hasToTurn=false;
-          setTimeout(() => this.hasToTurn=true, 250);
+          setTimeout(() => this.hasToTurn=true, 200);
           break;
         case KeyCode.RIGHT:
           if (this.anims.getCurrentKey() !== "blinky-walk-right")
@@ -77,7 +77,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
           this.setVelocity(Configuration.PlayerSpeed * 20, 0);
           this.changeDirectionRandom();
           this.hasToTurn=false;
-          setTimeout(() => this.hasToTurn=true, 250);
+          setTimeout(() => this.hasToTurn=true, 200);
           break;
         case KeyCode.DOWN:
           if (this.anims.getCurrentKey() !== "blinky-walk-bottom")
@@ -85,31 +85,31 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
           this.setVelocity(0, Configuration.PlayerSpeed * 20);
           this.changeDirectionRandom();
           this.hasToTurn=false;
-          setTimeout(() => this.hasToTurn=true, 250);
+          setTimeout(() => this.hasToTurn=true, 200);
           break;
       }
       this.cptBlock=0;
     } else if (actionAvailable === ActionCode.STOP) {
       this.setVelocity(0, Configuration.PlayerSpeed * 0);
       this.anims.stop();
-      // Force le demi-tour
-      if(this.cptBlock>5){
+      this.changeDirectionRandom();
+      this.hasToTurn=false;
+      setTimeout(() => this.hasToTurn=true, 200);
+      console.log(this.cptBlock);
+      this.cptBlock++;
+      if(this.cptBlock>50){
         this.turnBack();
-        this.cptBlock=0;
-        // this.x = 10;
-      } else {
-        this.cptBlock++;
       }
-      // this.changeDirectionRandom();
-      // this.hasToTurn=false;
-      // setTimeout(() => this.hasToTurn=true, 250);
     }
   }
 
   private canTurn(): ActionCode {
     // let x = this.x;
     // let y = this.y;
-    if(this.cptBlock>5) return ActionCode.CONTINUE;
+    if(this.cptBlock>51){
+      this.cptBlock = 0;
+      return ActionCode.TURN;
+    }
     let canContinue: boolean = null;
     let canGoNext: boolean = null;
 
