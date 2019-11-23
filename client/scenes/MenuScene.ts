@@ -6,7 +6,6 @@ import Game from "./GameScene";
 import { Scene } from "phaser";
 import textConfig from "../config/Text";
 import Score from "../transport/Score";
-import ScoreService from "../services/ScoreService";
 
 /**
  * Classe qui gère tous les évènements des menus

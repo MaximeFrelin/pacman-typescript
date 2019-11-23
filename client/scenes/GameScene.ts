@@ -88,10 +88,6 @@ export default class Game extends Phaser.Scene {
     this.pinky = new Pinky(this);
 
     GameManager.Player = this.pacman;
-    // GameManager.Ennemies.add(this.blinky);
-    // GameManager.Ennemies.add(this.clyde);
-    // GameManager.Ennemies.add(this.inky);
-    // GameManager.Ennemies.add(this.pinky);
   }
 
   /**
@@ -118,19 +114,6 @@ export default class Game extends Phaser.Scene {
     });
 
     this.mapLayer.setDepth(1);
-
-    // this.mapLayer.forEachTile((tile) => {
-    //   let rectangle = this.add.rectangle(
-    //     tile.pixelX,
-    //     tile.pixelY,
-    //     4,
-    //     4,
-    //     0xffffff
-    //   );
-    //   rectangle.setDepth(81);
-    // }, this, 0, 0, 1000, 1000, {
-    //   isColliding: true
-    // })
 
     this.physics.add.collider(this.pacman, this.mapLayer);
 

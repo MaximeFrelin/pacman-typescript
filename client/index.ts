@@ -4,6 +4,7 @@ import Menu from "./scenes/MenuScene";
 import Score from "./scenes/ScoreScene";
 import LoadScene from "./scenes/LoadScene";
 import Win from "./scenes/WinScene";
+import Lose from "./scenes/LoseScene";
 
 //TODO : Mettre l'animation manager dans une scène !!!!!!! IMPORTANT
 
@@ -54,6 +55,7 @@ window.onload = () => {
   game.scene.add("Score", Score);
   game.scene.add("Game", Game);
   game.scene.add("Win", Win);
+  game.scene.add("Lose", Lose);
 };
 
 export function getScenes(): Phaser.Scene[] {
@@ -88,9 +90,14 @@ export function displayWin() {
   game.scene.start("Win");
 }
 
+export function displayLose() {
+  game.scene.remove("Game");
+  game.scene.remove("LoadScene");
+  game.scene.start("Lose");
+}
+
 export function displayGame() {
   game.scene.stop("Win");
-  console.log(game.scene);
   game.scene.add("Game", Game);
   game.scene.add("LoadScene", LoadScene);
   game.scene.start("LoadScene");

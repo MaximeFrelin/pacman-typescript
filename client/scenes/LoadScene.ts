@@ -226,7 +226,7 @@ export default class LoadScene extends Phaser.Scene {
       key: "clyde-walk-right",
       frames: [
         { key: "ghost-brown-right-1", frame: "" },
-        { key: "ghost-brownn-right-2", frame: "" }
+        { key: "ghost-brown-right-2", frame: "" }
       ],
       frameRate: this.CLYDE_FRAMERATE,
       repeat: -1
