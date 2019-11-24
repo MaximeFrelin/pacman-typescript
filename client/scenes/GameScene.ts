@@ -9,8 +9,6 @@ import { displayMenu, displayWin } from "./../index";
 import SuperGomme from "./../entities/SuperGomme";
 import GameManager from "../GameManager";
 import HorizontalWall from "../entities/wall/HorizontalWall";
-import Configuration from "../config/Configuration";
-import { Physics } from "phaser";
 import Gomme from "../entities/Gomme";
 
 export default class Game extends Phaser.Scene {
@@ -37,13 +35,13 @@ export default class Game extends Phaser.Scene {
    */
   public create() {
     configureKeyboardForScene(this);
-    GameManager.BeginMusic = this.sound.add("begin");
+
+    GameManager.MainScene = this;
+    //Création des animations de la scène
+    this.initGameObjects();
 
     this.createGroups();
     this.initEvent();
-
-    //Création des animations de la scène
-    this.initGameObjects();
 
     //Création de la map
     this.createMap();
@@ -77,7 +75,12 @@ export default class Game extends Phaser.Scene {
       fill: "#FFFFFF"
     });
     keys.escape.on("down", () => {
+      GameManager.SirenMusic.pause();
       displayMenu();
+    });
+
+    GameManager.BeginMusic.once("complete", music => {
+      GameManager.SirenMusic.play();
     });
   }
 
@@ -85,6 +88,7 @@ export default class Game extends Phaser.Scene {
    * Instancie les objets de la scène
    */
   private initGameObjects(): void {
+    GameManager.InitMusic();
     this.pacman = new Pacman(this);
     this.blinky = new Blinky(this);
     this.clyde = new Clyde(this);

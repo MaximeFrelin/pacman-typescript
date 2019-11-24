@@ -28,13 +28,11 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     // this.body.offset();
     this.play("walk-right");
     this.initEvent();
-
   }
 
   //Appelé à chaque frame disponible
   preUpdate() {
-    if (!this.CanBegin)
-      return;
+    if (!this.CanBegin) return;
 
     this.anims.update(1, 9);
     this.currentScene.physics.overlap(
@@ -50,13 +48,11 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
   //Change la position de pacman
   public move(): void {
     let actionAvailable: ActionCode = this.canTurn();
-    if(this.x < 0) {
+    if (this.x < 0) {
       this.x = 220;
-    }
-    else if(this.x > 220) {
+    } else if (this.x > 220) {
       this.x = 0;
-    }
-    else if (actionAvailable === ActionCode.TURN) {
+    } else if (actionAvailable === ActionCode.TURN) {
       this.currentKey = this.nextKey;
       switch (this.currentKey) {
         case KeyCode.LEFT:
@@ -97,22 +93,24 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
     let nextXY = this.getNextPosition(this.nextKey, isSameDirection);
 
     //On check les collisions dans la direction ou on veut aller
-    canGoNext = GameManager.MapLayer.getTilesWithin(
-      Math.ceil((nextXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
-      Math.ceil((nextXY.y - 8) / 4),
-      4,
-      4,
-      { isColliding: true }
-    ).length == 0;
+    canGoNext =
+      GameManager.MapLayer.getTilesWithin(
+        Math.ceil((nextXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
+        Math.ceil((nextXY.y - 8) / 4),
+        4,
+        4,
+        { isColliding: true }
+      ).length == 0;
 
     //On check les collisions sur la route courante
-    canContinue = GameManager.MapLayer.getTilesWithin(
-      Math.ceil((currentXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
-      Math.ceil((currentXY.y - 8) / 4),
-      4,
-      4,
-      { isColliding: true }
-    ).length == 0;
+    canContinue =
+      GameManager.MapLayer.getTilesWithin(
+        Math.ceil((currentXY.x - 8) / 4), //On divise par 4 pour avoir la position en nombre de tuile et -8 pour centrer dans le coin haut/gauche de pacman
+        Math.ceil((currentXY.y - 8) / 4),
+        4,
+        4,
+        { isColliding: true }
+      ).length == 0;
 
     if (!canGoNext) {
       //Si je n'ai pas changé de direction et que je rencontre un mur
@@ -157,7 +155,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
         break;
     }
 
-    return { x, y }
+    return { x, y };
   }
 
   //Change la direction
@@ -181,7 +179,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
       this.changeDirection(KeyCode.DOWN);
     });
 
-    GameManager.BeginMusic.once('complete', (music) => {
+    GameManager.BeginMusic.once("complete", music => {
       this.CanBegin = true;
     });
   }
@@ -193,6 +191,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
    */
   private handleOverlap(object1, object2) {
     if (object2 instanceof SuperGomme || object2 instanceof Gomme) {
+      if (!GameManager.EatMusic.isPlaying) GameManager.EatMusic.play();
       this.eatSuperGomme(object2);
     }
   }

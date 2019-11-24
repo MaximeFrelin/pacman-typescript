@@ -15,6 +15,7 @@ export default class Clyde extends Phaser.Physics.Arcade.Sprite {
   IsWraping: boolean = false;
   hasToTurn: boolean = true;
   cptBlock: number = 0;
+  CanBegin: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 110, 90, "ghost-brown-top-1");
@@ -33,6 +34,8 @@ export default class Clyde extends Phaser.Physics.Arcade.Sprite {
 
   //Appelé à chaque frame disponible
   preUpdate() {
+    if (!this.CanBegin) return;
+
     this.anims.update(1, 9);
     this.currentScene.physics.overlap(
       this,
@@ -239,6 +242,9 @@ export default class Clyde extends Phaser.Physics.Arcade.Sprite {
 
   //Initialise le mouvement du fantome
   private initMove(): void {
+    GameManager.BeginMusic.once("complete", music => {
+      this.CanBegin = true;
+    });
     this.changeDirection(KeyCode.RIGHT);
   }
 

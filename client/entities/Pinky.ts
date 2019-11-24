@@ -25,9 +25,10 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   RectangleList: any[] = [];
   CurrentActionStatut: ActionCode = undefined;
   Interval: any = null;
+  CanBegin: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 110, 90, "ghost-purple-top-1");
+    super(currentScene, 110, 115  , "ghost-purple-top-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
@@ -36,6 +37,9 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
     this.body.setSize(6, 8, false);
     this.body.setOffset(4, 4);
     this.play("ghost-purple-stand-by");
+    GameManager.BeginMusic.once("complete", music => {
+      this.CanBegin = true;
+    });
     if (this.PathFindLoop) {
       this.Interval = setInterval(() => {
         this.FindPath();
@@ -45,6 +49,8 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
 
   //Appelé à chaque frame disponible
   preUpdate() {
+    if (!this.CanBegin) return;
+
     if (this.CanMove) {
       this.move();
     }

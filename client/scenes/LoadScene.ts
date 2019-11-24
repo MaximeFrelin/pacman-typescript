@@ -1,7 +1,6 @@
 import * as Phaser from "phaser";
 import GameManager from "../GameManager";
 
-
 export default class LoadScene extends Phaser.Scene {
   private readonly PACMAN_FRAMERATE = 25;
   private readonly CLYDE_FRAMERATE = 35;
@@ -432,5 +431,7 @@ export default class LoadScene extends Phaser.Scene {
 
   public loadMusic(): void {
     this.load.audio("begin", "music/pacman_beginning.wav");
+    this.load.audio("eat", "music/pacman-eat.mp3");
+    this.load.audio("siren", "music/ghost-siren.mp3");
   }
 }

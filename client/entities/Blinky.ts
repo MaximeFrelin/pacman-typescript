@@ -15,9 +15,10 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
   IsWraping: boolean = false;
   hasToTurn: boolean = true;
   cptBlock: number = 0;
+  CanBegin: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 110, 90, "ghost-red-top-1");
+    super(currentScene, 90, 90, "ghost-red-top-1");
     this.currentScene = currentScene;
     this.setDepth(100);
     this.currentScene.add.existing(this);
@@ -33,6 +34,8 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
 
   //Appelé à chaque frame disponible
   preUpdate() {
+    if (!this.CanBegin) return;
+
     this.anims.update(1, 9);
     this.currentScene.physics.overlap(
       this,
@@ -239,6 +242,9 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
 
   //Initialise le mouvement du fantome
   private initMove(): void {
+    GameManager.BeginMusic.once("complete", music => {
+      this.CanBegin = true;
+    });
     this.changeDirection(KeyCode.RIGHT);
   }
 

@@ -29,6 +29,40 @@ export default {
       backgroundColor: "#cccc00"
     }
   },
+  unmute: {
+    x: 230,
+    y: 300,
+    padding: {
+      left: 30,
+      right: 30,
+      top: 15,
+      bottom: 15
+    },
+    text: "Activer la musique",
+    style: {
+      fontSize: "20px",
+      fontFamily: familyFont,
+      color: "#000000",
+      backgroundColor: "#cccc00"
+    }
+  },
+  mute: {
+    x: 205,
+    y: 300,
+    padding: {
+      left: 30,
+      right: 30,
+      top: 15,
+      bottom: 15
+    },
+    text: "Desactiver la musique",
+    style: {
+      fontSize: "20px",
+      fontFamily: familyFont,
+      color: "#000000",
+      backgroundColor: "#cccc00"
+    }
+  },
   btnScoreRetour: {
     x: 325,
     y: 550,
