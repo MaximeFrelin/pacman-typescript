@@ -5,7 +5,7 @@ import SuperGomme from "./SuperGomme";
 import { Config } from "..";
 import Gomme from "./Gomme";
 import TileMapHelper from "./../helpers/TileMapHelper";
-import "astar-typescript";
+// import "astar-typescript";
 import { AStarFinder } from "astar-typescript";
 import { displayLose } from "../index";
 
@@ -45,6 +45,7 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
         this.FindPath();
       }, 700);
     }
+    console.log(this.currentScene);
   }
 
   //Appelé à chaque frame disponible
@@ -72,6 +73,7 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
       let caseCoordToFollow = this.FollowPath();
       this.UpdateTileToFollow(caseCoordToFollow);
     }
+    this.eatPacman();
   }
 
   //Change la position de pacman
@@ -211,9 +213,20 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
    * @param object2 - Concerne la classe avec qui je suis entré en collision
    */
   private handleOverlap(object1, object2) {
-    // clearInterval(this.Interval);
-    // displayLose();
+    console.log(object1); // C'est Pinky
+    console.log(object2); // C'est Pacman
+    if (object2 instanceof Blinky) {
+      // if (!GameManager.EatMusic.isPlaying) GameManager.EatMusic.play();
+      this.eatPacman(object2);
+    }
   }
+
+  /**
+  * Mange Pacman
+  */
+    public eatPacman(pacman: Pacman){
+      console.log("PACMAN EST BOUFFE");
+    }
 
   /**
    * Supprime la coordonnée atteinte

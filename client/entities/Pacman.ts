@@ -42,6 +42,7 @@ export default class Pacman extends Phaser.Physics.Arcade.Sprite {
       null,
       this
     );
+
     this.move();
   }
 
