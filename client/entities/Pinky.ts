@@ -28,7 +28,7 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   CanBegin: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 110, 115  , "ghost-purple-top-1");
+    super(currentScene, 110, 115, "ghost-purple-top-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
@@ -211,8 +211,8 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
    * @param object2 - Concerne la classe avec qui je suis entré en collision
    */
   private handleOverlap(object1, object2) {
-    // clearInterval(this.Interval);
-    // displayLose();
+    clearInterval(this.Interval);
+    console.log("touché");
   }
 
   /**
