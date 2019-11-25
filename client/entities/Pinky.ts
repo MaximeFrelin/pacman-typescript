@@ -290,6 +290,8 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   }
 
   private FindPath() {
+    if (!GameManager.Player.body) return;
+
     let pacmanX = (GameManager.Player.body as Phaser.Physics.Arcade.Body).x;
     let pacmanY = (GameManager.Player.body as Phaser.Physics.Arcade.Body).y;
 

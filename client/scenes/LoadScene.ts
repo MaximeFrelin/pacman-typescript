@@ -431,6 +431,7 @@ export default class LoadScene extends Phaser.Scene {
 
   public loadMusic(): void {
     this.load.audio("begin", "music/pacman_beginning.wav");
+    this.load.audio("win", "music/win.mp3");
     this.load.audio("eat", "music/pacman-eat.mp3");
     this.load.audio("siren", "music/ghost-siren.mp3");
   }
