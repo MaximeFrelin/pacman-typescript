@@ -12,12 +12,14 @@ export default class WinScene extends Phaser.Scene {
   private score: Score[];
   private recommencerButton: Phaser.GameObjects.Text;
   private winLabel: Phaser.GameObjects.Text;
+  private WinMusic: Phaser.Sound.BaseSound;
 
   protected preload() {}
 
   public create() {
     this.display();
     this.initEvent();
+    this.loadMusic();
   }
 
   //Appelé à chaque frame disponible
@@ -26,6 +28,7 @@ export default class WinScene extends Phaser.Scene {
   private initEvent() {
     this.recommencerButton.on("pointerdown", evt => {
       displayGame();
+      this.WinMusic.stop();
     });
   }
 
@@ -42,5 +45,8 @@ export default class WinScene extends Phaser.Scene {
     this.recommencerButton.setInteractive();
   }
 
-
+  private loadMusic() {
+    this.WinMusic = this.sound.add("win", { loop: true, volume: 1.5 });
+    this.WinMusic.play();
+  }
 }

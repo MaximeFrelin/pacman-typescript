@@ -57,6 +57,11 @@ export default class Game extends Phaser.Scene {
   //Appelé à chaque frame disponible
   public update() {
     if (GameManager.PowerUps.getLength() == 0) {
+      GameManager.StopMusic();
+      this.blinky = null;
+      this.clyde = null;
+      this.pinky = null;
+      this.inky = null;
       displayWin();
     }
   }

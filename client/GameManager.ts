@@ -30,6 +30,12 @@ export default class GameManager {
     });
   }
 
+  public static StopMusic() {
+    this.BeginMusic.stop();
+    this.EatMusic.stop();
+    this.SirenMusic.stop();
+  }
+
   public static Mute() {
     this.Volume = 0;
   }
