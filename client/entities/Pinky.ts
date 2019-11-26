@@ -7,7 +7,7 @@ import Gomme from "./Gomme";
 import TileMapHelper from "./../helpers/TileMapHelper";
 // import "astar-typescript";
 import { AStarFinder } from "astar-typescript";
-import { displayLose } from "../index";
+import { displayLose } from "./../index";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
@@ -26,9 +26,10 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   CurrentActionStatut: ActionCode = undefined;
   Interval: any = null;
   CanBegin: boolean = false;
+  isOut: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
-    super(currentScene, 110, 115  , "ghost-purple-top-1");
+    super(currentScene, 110, 115, "ghost-purple-top-1");
     this.currentScene = currentScene;
     this.setDepth(2);
     this.currentScene.add.existing(this);
@@ -45,13 +46,19 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
         this.FindPath();
       }, 700);
     }
-    console.log(this.currentScene);
   }
 
   //Appelé à chaque frame disponible
   preUpdate() {
     if (!this.CanBegin) return;
-
+    if (!this.isOut){
+      this.nextKey = KeyCode.UP;
+      this.move();
+      if(this.y <= 95) {
+        this.isOut = true;
+      }
+      return;
+    }
     if (this.CanMove) {
       this.move();
     }
@@ -73,7 +80,6 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
       let caseCoordToFollow = this.FollowPath();
       this.UpdateTileToFollow(caseCoordToFollow);
     }
-    this.eatPacman();
   }
 
   //Change la position de pacman
@@ -213,20 +219,10 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
    * @param object2 - Concerne la classe avec qui je suis entré en collision
    */
   private handleOverlap(object1, object2) {
-    console.log(object1); // C'est Pinky
-    console.log(object2); // C'est Pacman
-    if (object2 instanceof Blinky) {
-      // if (!GameManager.EatMusic.isPlaying) GameManager.EatMusic.play();
-      this.eatPacman(object2);
-    }
+    clearInterval(this.Interval);
+    displayLose();
   }
 
-  /**
-  * Mange Pacman
-  */
-    public eatPacman(pacman: Pacman){
-      console.log("PACMAN EST BOUFFE");
-    }
 
   /**
    * Supprime la coordonnée atteinte
