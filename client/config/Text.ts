@@ -177,6 +177,19 @@ export default {
       backgroundColor: "#cccc00"
     }
   },
+  currentScore: (score: number): any => {
+    return {
+      x: 230,
+      y: 10,
+      text: "Score :" + score,
+      style: {
+        fontSize:"10px",
+        fontFamily: familyFont,
+        color: "#FFFFFF",
+        backgroundColor: "#000000"
+      }
+    };
+  },
   Scoring: (score: number): any => {
     return {
       x: 275,
