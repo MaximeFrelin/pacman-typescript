@@ -98,6 +98,7 @@ export function displayLose() {
 
 export function displayGame() {
   game.scene.stop("Win");
+  game.scene.stop("Lose");
   game.scene.add("Game", Game);
   game.scene.add("LoadScene", LoadScene);
   game.scene.start("LoadScene");

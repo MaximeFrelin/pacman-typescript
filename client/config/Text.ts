@@ -160,6 +160,16 @@ export default {
       color: "#746D69"
     }
   },
+  lose: {
+    x: 130,
+    y: 275,
+    text: "Vous avez perdu !",
+    style: {
+      fontSize: "40px",
+      fontFamily: familyFont,
+      color: "#746D69"
+    }
+  },
   recommencer: {
     x: 185,
     y: 350,
