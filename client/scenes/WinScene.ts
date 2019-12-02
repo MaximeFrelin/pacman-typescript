@@ -46,7 +46,10 @@ export default class WinScene extends Phaser.Scene {
   }
 
   private loadMusic() {
-    this.WinMusic = this.sound.add("win", { loop: true, volume: 1.5 });
+    this.WinMusic = this.sound.add("win", {
+      loop: true,
+      volume: GameManager.Volume * 1.5
+    });
     this.WinMusic.play();
   }
 }
