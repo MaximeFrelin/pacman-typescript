@@ -5,9 +5,9 @@ import SuperGomme from "./SuperGomme";
 import { Config } from "..";
 import Gomme from "./Gomme";
 import TileMapHelper from "./../helpers/TileMapHelper";
-import "astar-typescript";
+// import "astar-typescript";
 import { AStarFinder } from "astar-typescript";
-import { displayLose } from "../index";
+import { displayLose } from "./../index";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
@@ -26,6 +26,7 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   CurrentActionStatut: ActionCode = undefined;
   Interval: any = null;
   CanBegin: boolean = false;
+  isOut: boolean = false;
 
   constructor(currentScene: Phaser.Scene) {
     super(currentScene, 110, 115, "ghost-purple-top-1");
@@ -50,7 +51,14 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   //Appelé à chaque frame disponible
   preUpdate() {
     if (!this.CanBegin) return;
-
+    if (!this.isOut){
+      this.nextKey = KeyCode.UP;
+      this.move();
+      if(this.y <= 95) {
+        this.isOut = true;
+      }
+      return;
+    }
     if (this.CanMove) {
       this.move();
     }
@@ -212,8 +220,9 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
    */
   private handleOverlap(object1, object2) {
     clearInterval(this.Interval);
-    console.log("touché");
+    displayLose();
   }
+
 
   /**
    * Supprime la coordonnée atteinte

@@ -10,6 +10,7 @@ import SuperGomme from "./../entities/SuperGomme";
 import GameManager from "../GameManager";
 import HorizontalWall from "../entities/wall/HorizontalWall";
 import Gomme from "../entities/Gomme";
+import Text from "../config/Text"
 
 export default class Game extends Phaser.Scene {
   private pacman: Pacman = null;
@@ -64,6 +65,10 @@ export default class Game extends Phaser.Scene {
       this.inky = null;
       displayWin();
     }
+    console.log("passe");
+    if (this.scoreText)
+      this.scoreText.destroy();
+    this.make.text(Text.currentScore(GameManager.Score));
   }
 
   private createGroups() {

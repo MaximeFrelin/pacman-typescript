@@ -4,6 +4,7 @@ import GameManager from "../GameManager";
 import SuperGomme from "./SuperGomme";
 import { Config } from "..";
 import Gomme from "./Gomme";
+import { displayLose } from "./../index";
 
 /**
  * Cette classe remplacera le code présent dans Game.ts
@@ -39,7 +40,7 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
     this.anims.update(1, 9);
     this.currentScene.physics.overlap(
       this,
-      GameManager.PowerUps,
+      GameManager.Player,
       this.handleOverlap,
       null,
       this
@@ -191,6 +192,17 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
     if (this.currentKey === null) this.currentKey = keyCode;
   }
 
+  /**
+   * Gère les collisions
+   * @param object1 - Concerne l'objet courant
+   * @param object2 - Concerne la classe avec qui je suis entré en collision
+   */
+  private handleOverlap(object1, object2) {
+    // clearInterval(this.Interval);
+    displayLose();
+    console.log("ORANGE")
+  }
+
   //Change la direction aléatoirement
   private changeDirectionRandom(): void {
     switch (this.getRandomInt(4)) {
@@ -248,12 +260,6 @@ export default class Blinky extends Phaser.Physics.Arcade.Sprite {
     this.changeDirection(KeyCode.RIGHT);
   }
 
-  /**
-   * Gère les collisions
-   * @param object1 - Concerne l'objet courant
-   * @param object2 - Concerne la classe avec qui je suis entré en collision
-   */
-  private handleOverlap(object1, object2) {}
 }
 
 enum KeyCode {

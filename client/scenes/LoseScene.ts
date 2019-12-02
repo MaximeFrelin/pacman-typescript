@@ -33,7 +33,7 @@ export default class LoseScene extends Phaser.Scene {
    * Affiche le menu
    */
   private display(): void {
-    this.winLabel = this.make.text(textConfig.win);
+    this.winLabel = this.make.text(textConfig.lose);
     this.winLabel.setDepth(2);
 
     this.make.text(textConfig.Scoring(GameManager.Score));
