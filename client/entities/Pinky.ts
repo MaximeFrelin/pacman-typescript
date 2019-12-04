@@ -221,6 +221,7 @@ export default class Pinky extends Phaser.Physics.Arcade.Sprite {
   private handleOverlap(object1, object2) {
     clearInterval(this.Interval);
     displayLose();
+    GameManager.SirenMusic.stop();
   }
 
 

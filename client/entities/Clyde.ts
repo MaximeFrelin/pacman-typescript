@@ -200,7 +200,7 @@ export default class Clyde extends Phaser.Physics.Arcade.Sprite {
   private handleOverlap(object1, object2) {
     // clearInterval(this.Interval);
     displayLose();
-    console.log("ROUGE")
+    GameManager.SirenMusic.stop();
   }
 
   //Change la direction aléatoirement

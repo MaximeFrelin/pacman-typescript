@@ -199,7 +199,7 @@ export default class Inky extends Phaser.Physics.Arcade.Sprite {
   private handleOverlap(object1, object2) {
     // clearInterval(this.Interval);
     displayLose();
-    console.log("BLEU");
+    GameManager.SirenMusic.stop();
   }
 
   //Change la direction aléatoirement
